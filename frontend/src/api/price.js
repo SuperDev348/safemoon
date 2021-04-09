@@ -1,3 +1,5 @@
+import siteConfig from '../config/site.config'
+
 const formatDate = date =>
   `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
     date.getSeconds(),
@@ -6,12 +8,9 @@ const formatDate = date =>
 function fetchPrice(id) {
 
   return window
-    .fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?'+ new URLSearchParams({
-        id: id,
-      }), {
+    .fetch(`${siteConfig.apiUrl}/api/price/${id}`, {
       method: 'GET',
       headers: {
-        'X-CMC_PRO_API_KEY': 'd2a7a936-e772-45b2-91f1-786577bd0240',
       },
     })
     .then(async response => {

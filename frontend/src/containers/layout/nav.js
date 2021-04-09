@@ -60,23 +60,26 @@ function Nav() {
         onClose={handleClose} 
         aria-labelledby="form-dialog-title"
         fullWidth
-        maxWidth='md'
+        maxWidth='sm'
       >
         <DialogTitle id="form-dialog-title">Settings</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            please enter wallet id in here
+            please enter wallet id and cron string in here
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="walletid"
             label="Wallet Id"
+            inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
             type="text"
             fullWidth
+            variant="outlined"
             autoComplete="off"
             value={walletId}
             onChange={(e) => setWalletId(e.target.value)}
+            style={{marginTop: 20}}
           />
         </DialogContent>
         <DialogActions>

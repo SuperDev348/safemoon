@@ -114,6 +114,7 @@ module.exports = {
     var coin={};
     coin.walletId=req.body.walletId;
     coin.amount=req.body.amount;
+    console.log(coin)
     if (!coin.walletId || !coin.amount) {
       getDataByWalletId(coin.walletId)
       .then((data) => {

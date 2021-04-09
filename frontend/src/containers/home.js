@@ -45,7 +45,7 @@ function PriceInfo() {
     ,[])
 
   React.useEffect(() => {
-    run(fetchPrice(1))
+    run(fetchPrice(8757))
   }, [run])
   React.useEffect(() => {
     dispatch({type: 'SET', settingName: 'price', settingData: price})
@@ -59,7 +59,9 @@ function PriceInfo() {
     throw error
   } else if (status === 'resolved') {
     price = data?.quote?.USD?.price
-    return <span>Current price: ${price.toFixed(2)}</span>
+    const tmp = price
+    price = price * 100000000
+    return <span>Current price: ${tmp.toExponential(3)}</span>
   }
 
   throw new Error('This should be impossible')
@@ -139,13 +141,13 @@ function EarningInfo(props) {
           <div className={classes.earningItem}>{amounts[6].toExponential(3)}</div>
         </Grid>
         <Grid item>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[0]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[1]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[2]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[3]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[4]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[5]).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[6]).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[0]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[1]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[2]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[3]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[4]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[5]/100000000).toExponential(3)}</div>
+          <div className={classes.earningItem}>$ {(setting?.price * amounts[6]/100000000).toExponential(3)}</div>
         </Grid>
       </Grid>
     </div>
@@ -156,16 +158,20 @@ function Home() {
   const {data, status, error, run} = useAsync({
     status: 'idle',
   })
+  const [setting] = useSetting()
   const [amount, setAmount] = useState(0)
   const classes = useStyles();
 
   useEffect(() => {
     const interval = setInterval(function () {
       console.log('update coin')
-      run(fetchBitcoine())
+      console.log(setting)
+      if (setting.walletId != null && setting.walletId != '') {
+        run(fetchBitcoine(setting.walletId))
+      }
     }, 15 * 60000)
     return () => {
-        clearInterval(interval);
+      clearInterval(interval);
     }
   }, [run])
   useEffect(() => {

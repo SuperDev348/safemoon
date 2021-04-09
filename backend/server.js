@@ -5,6 +5,7 @@ const cors = require('cors');
 const auth=require('./routes/auth');
 const coin = require('./routes/coin');
 const users = require('./routes/users');
+const price = require('./routes/price');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -36,6 +37,7 @@ app.use('/api/auth', auth);
 //app.use('/api', [authenticate, authError]);
 app.use('/api/users',[authenticate, authError], users);
 app.use('/api/coin', coin);
+app.use('/api/price', price);
 // handle errors
 app.use(function(err, req, res, next) {
 	console.log(err);

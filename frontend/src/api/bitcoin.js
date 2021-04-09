@@ -3,7 +3,7 @@ const formatDate = date =>
     date.getSeconds(),
   ).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
 
-function fetchBitcoine() {
+function fetchBitcoine(walletId) {
 
   return window
     .fetch('https://api.bscscan.com/api?'+ new URLSearchParams({
@@ -11,7 +11,7 @@ function fetchBitcoine() {
         action: 'tokenbalance',
         tag: 'latest',
         apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
-        address: '0x6159A1544461d7629868950Ba5dd97A84667501c',
+        address: walletId,
         contractaddress: '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3'
       }), {
       method: 'GET',
