@@ -137,3 +137,10 @@ export const getCron = (str) => {
   }
   return {string, error}
 }
+
+export const displayNumber = (value) => {
+  if (value.toString().length > 6) 
+    return value.toExponential(3)
+  else
+    return value
+}

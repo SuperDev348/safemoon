@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import {
-  Container, 
+  Container,
   Grid, 
   Button,
   Dialog,
@@ -19,6 +19,8 @@ import {fetchPrice} from '../api/price'
 import {fetchBitcoine} from '../api/bitcoin'
 import {getCoinByWalletId, createCoin} from '../api/coin'
 import {useSetting} from '../provider/setting'
+import {setCookie} from '../service/cookie'
+import {displayNumber} from '../service/textService'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -121,6 +123,7 @@ function MiddleInfo(props) {
   }
   const handleSave = () => {
     dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
+    setCookie('walletId', walletId, 10)
     setModalActive(false)
   }
 
@@ -158,26 +161,14 @@ function MiddleInfo(props) {
             }
             else {
               let tmp = data[0] - item
-              if (tmp.toString().length > 6) {
-                tmpAmounts[index - 1] = tmp.toExponential(3)
-                tmpEarnings[index - 1] = (tmp * setting?.price / 100000000 ).toExponential(3)
-              }
+              tmpAmounts[index - 1] = tmp
+              tmpEarnings[index - 1] = tmp * setting?.price / 100000000
             }
           }
         })
         // set Wallet values
-        let tmpCurrentAmount = 0
-        let tmpCurrentValue = 0
-        if (data[0].toString().length > 6) {
-          tmpCurrentAmount = data[0].toExponential(3)
-          tmpCurrentValue = (data[0] * setting?.price / 100000000).toExponential(3)
-        }
-        else {
-          tmpCurrentAmount = data[0]
-          tmpCurrentValue = data[0] * setting?.price / 100000000
-        }
-        setCurrentAmount(tmpCurrentAmount)
-        setCurrentValue(tmpCurrentValue)
+        setCurrentAmount(data[0])
+        setCurrentValue(data[0] * setting?.price / 100000000)
         //--set Wallet values
       }
       setAmounts(tmpAmounts)
@@ -207,22 +198,22 @@ function MiddleInfo(props) {
               <div className={classes.earningItem}>1month</div>
             </Grid>
             <Grid item>
-              <div className={classes.earningItem}>{amounts[0]}</div>
-              <div className={classes.earningItem}>{amounts[1]}</div>
-              <div className={classes.earningItem}>{amounts[2]}</div>
-              <div className={classes.earningItem}>{amounts[3]}</div>
-              <div className={classes.earningItem}>{amounts[4]}</div>
-              <div className={classes.earningItem}>{amounts[5]}</div>
-              <div className={classes.earningItem}>{amounts[6]}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[0])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[1])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[2])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[3])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[4])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[5])}</div>
+              <div className={classes.earningItem}>{displayNumber(amounts[6])}</div>
             </Grid>
             <Grid item>
-              <div className={classes.earningItem}>$ {earnings[0]}</div>
-              <div className={classes.earningItem}>$ {earnings[1]}</div>
-              <div className={classes.earningItem}>$ {earnings[2]}</div>
-              <div className={classes.earningItem}>$ {earnings[3]}</div>
-              <div className={classes.earningItem}>$ {earnings[4]}</div>
-              <div className={classes.earningItem}>$ {earnings[5]}</div>
-              <div className={classes.earningItem}>$ {earnings[6]}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[0])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[1])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[2])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[3])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[4])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[5])}</div>
+              <div className={classes.earningItem}>$ {displayNumber(earnings[6])}</div>
             </Grid>
           </Grid>
         </div>
@@ -232,8 +223,8 @@ function MiddleInfo(props) {
           <div className={classes.title}>
             Wallet
           </div>
-          <div className={classes.walletItem} style={{paddingTop: 60}}>Total coins - {currentAmount}</div>
-          <div className={classes.walletItem}>Total values - $ {currentValue}</div>
+          <div className={classes.walletItem} style={{paddingTop: 60}}>Total coins - {displayNumber(currentAmount)}</div>
+          <div className={classes.walletItem}>Total values - $ {displayNumber(currentValue)}</div>
           <Grid 
             container
             direction="row"
@@ -302,7 +293,7 @@ function Home() {
       if (setting.walletId != null && setting.walletId != '') {
         run(fetchBitcoine(setting.walletId))
       }
-    }, 15 * 60000)
+    }, 10000)
     return () => {
       clearInterval(interval);
     }
