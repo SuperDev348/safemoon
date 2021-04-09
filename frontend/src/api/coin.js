@@ -7,9 +7,7 @@ const formatDate = date =>
 
 function getCoinByWalletId(id) {
   return window
-    .fetch(`${siteConfig.apiUrl}/api/coin/${(new URLSearchParams({
-        id: id,
-      }))}`, {
+    .fetch(`${siteConfig.apiUrl}/api/coin/${id}`, {
       method: 'GET',
       headers: {
       },

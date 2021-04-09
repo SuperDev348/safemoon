@@ -19,25 +19,7 @@ import {useSetting} from '../../provider/setting'
 
 function Nav() {
   const classes = useStyles()
-  const [setting, dispatch] = useSetting()
-  const [modalActive, setModalActive] = React.useState(false)
-  const [walletId, setWalletId] = useState('')
-
-  const handleClickOpen = () => {
-    setModalActive(true)
-  }
-  const handleClose = () => {
-    setModalActive(false)
-  }
-  const handleSave = () => {
-    dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
-    setModalActive(false)
-  }
-
-  useEffect(() => {
-    const tmp = setting?.walletId || ''
-    // setWalletId(tmp)
-  }, [setting])
+  
 
   return (
     <div className={classes.root}>
@@ -48,49 +30,8 @@ function Nav() {
           </IconButton>
           <Typography className={classes.title} variant="h6" color="inherit">
           </Typography>
-          <IconButton className={classes.button} edge="start" color="inherit" aria-label="menu" onClick={handleClickOpen}>
-            <Settings />
-          </IconButton>
         </Toolbar>
       </AppBar>
-      <Dialog 
-        disableBackdropClick
-        disableEscapeKeyDown
-        open={modalActive} 
-        onClose={handleClose} 
-        aria-labelledby="form-dialog-title"
-        fullWidth
-        maxWidth='sm'
-      >
-        <DialogTitle id="form-dialog-title">Settings</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            please enter wallet id and cron string in here
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="walletid"
-            label="Wallet Id"
-            inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
-            type="text"
-            fullWidth
-            variant="outlined"
-            autoComplete="off"
-            value={walletId}
-            onChange={(e) => setWalletId(e.target.value)}
-            style={{marginTop: 20}}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button className={classes.button} onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button className={classes.button} onClick={handleSave} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   )
 }

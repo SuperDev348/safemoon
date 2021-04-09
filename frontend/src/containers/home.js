@@ -1,5 +1,15 @@
 import React, {useState, useEffect, useMemo} from 'react'
-import {Container, Grid} from '@material-ui/core'
+import {
+  Container, 
+  Grid, 
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions
+} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles"
 
 import Nav from './layout/nav'
@@ -10,6 +20,10 @@ import {getCoinByWalletId, createCoin} from '../api/coin'
 import {useSetting} from '../provider/setting'
 
 const useStyles = makeStyles((theme) => ({
+  button: {
+    textTransform: 'none',
+    outline: 'none !important',
+  },
   panel: {
     border: 'solid 1px #e6cbcb',
     borderRadius: 5,
@@ -22,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
   earningItem: {
     fontSize: 22,
     padding: 5
+  },
+  walletItem: {
+    fontSize: 22,
+    padding: 10,
+    textAlign: 'center'
   },
   middle: {
     height: 400
@@ -40,16 +59,21 @@ function PriceInfo() {
     status: 'idle',
   })
   const [setting, dispatch] = useSetting()
-  let price = React.useMemo(() => 
-    ''
-    ,[])
+  const [price, setPrice] = useState(0)
 
   React.useEffect(() => {
     run(fetchPrice(8757))
   }, [run])
   React.useEffect(() => {
-    dispatch({type: 'SET', settingName: 'price', settingData: price})
-  }, [price])
+    if (status === 'resolved') {
+      const initPrice = data?.quote?.USD?.price
+      let tmp = initPrice
+      if (tmp.toString().length > 6)
+        tmp = tmp.toExponential(3)
+      setPrice(tmp)
+      dispatch({type: 'SET', settingName: 'price', settingData: initPrice * 100000000})
+    }
+  }, [status])
   
   if (status === 'idle') {
     return 'Submit a pokemon'
@@ -58,29 +82,48 @@ function PriceInfo() {
   } else if (status === 'rejected') {
     throw error
   } else if (status === 'resolved') {
-    price = data?.quote?.USD?.price
-    const tmp = price
-    price = price * 100000000
-    return <span>Current price: ${tmp.toExponential(3)}</span>
+    
+    return <span>Current price: ${price}</span>
   }
 
   throw new Error('This should be impossible')
 }
 
-function EarningInfo(props) {
+function MiddleInfo(props) {
   const {data, status, error, run} = useAsync({
     status: 'idle',
   })
   const {amount} = props
   const classes = useStyles();
-  const [setting] = useSetting()
+  const [setting, dispatch] = useSetting()
   const [amounts, setAmounts] = useState([0, 0, 0, 0, 0, 0, 0])
-  
+  const [earnings, setEarnings] = useState([0, 0, 0, 0, 0, 0, 0])
+  const [currentAmount, setCurrentAmount] = useState(0)
+  const [currentValue, setCurrentValue] = useState(0)
+  const [modalActive, setModalActive] = React.useState(false)
+  const [walletId, setWalletId] = useState('')
+
+  const handleClickOpen = () => {
+    setModalActive(true)
+  }
+  const handleClose = () => {
+    setModalActive(false)
+  }
+  const handleSave = () => {
+    dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
+    setModalActive(false)
+  }
+
+  useEffect(() => {
+    const tmp = setting?.walletId || ''
+    // setWalletId(tmp)
+  }, [setting])
   useEffect(() => {
     run(createCoin(setting.walletId, amount))
   }, [run, amount])
   useEffect(() => {
     if (setting?.walletId != null && setting.walletId != '') {
+      console.log('init earning')
       run(getCoinByWalletId(setting.walletId))
     }
   }, [setting?.walletId, run])
@@ -92,65 +135,150 @@ function EarningInfo(props) {
     } else if (status === 'rejected') {
       throw error
     } else if (status === 'resolved') {
-      let tmp = [0, 0, 0, 0, 0, 0, 0]
+      let tmpAmounts = [0, 0, 0, 0, 0, 0, 0]
+      let tmpEarnings = [0, 0, 0, 0, 0, 0, 0]
       if (data != null && data.length != 0 && data[0] != -1) {
         data.forEach((item, index) => {
           if (index != 0) {
             if (item == -1) {
-              if (index == 1)
-                tmp[index - 1] = 0
-              else
-                tmp[index - 1] = tmp[index - 2]
+              if (index == 1) {
+                tmpAmounts[index - 1] = 0
+                tmpEarnings[index - 1] = 0
+              }
+              else {
+                tmpAmounts[index - 1] = tmpAmounts[index - 2]
+                tmpEarnings[index - 1] = tmpEarnings[index - 2]
+              }
             }
             else {
-              tmp[index - 1] = data[0] - item
+              let tmp = data[0] - item
+              if (tmp.toString().length > 6) {
+                tmpAmounts[index - 1] = tmp.toExponential(3)
+                tmpEarnings[index - 1] = (tmp * setting?.price / 100000000 ).toExponential(3)
+              }
             }
           }
         })
+        // set Wallet values
+        let tmpCurrentAmount = 0
+        let tmpCurrentValue = 0
+        if (data[0].toString().length > 6) {
+          tmpCurrentAmount = data[0].toExponential(3)
+          tmpCurrentValue = (data[0] * setting?.price / 100000000).toExponential(3)
+        }
+        else {
+          tmpCurrentAmount = data[0]
+          tmpCurrentValue = data[0] * setting?.price / 100000000
+        }
+        setCurrentAmount(tmpCurrentAmount)
+        setCurrentValue(tmpCurrentValue)
+        //--set Wallet values
       }
-      setAmounts(tmp)
+      setAmounts(tmpAmounts)
+      setEarnings(tmpEarnings)
     }
   }, [status])
 
   return (
-    <div className={`${classes.panel} ${classes.middle}`}>
-      <div className={classes.title}>
-        Earnings
-      </div>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-      >
-        <Grid item>
-          <div className={classes.earningItem}>15min</div>
-          <div className={classes.earningItem}>30min</div>
-          <div className={classes.earningItem}>1h</div>
-          <div className={classes.earningItem}>12h</div>
-          <div className={classes.earningItem}>24h</div>
-          <div className={classes.earningItem}>1week</div>
-          <div className={classes.earningItem}>1month</div>
-        </Grid>
-        <Grid item>
-          <div className={classes.earningItem}>{amounts[0].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[1].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[2].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[3].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[4].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[5].toExponential(3)}</div>
-          <div className={classes.earningItem}>{amounts[6].toExponential(3)}</div>
-        </Grid>
-        <Grid item>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[0]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[1]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[2]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[3]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[4]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[5]/100000000).toExponential(3)}</div>
-          <div className={classes.earningItem}>$ {(setting?.price * amounts[6]/100000000).toExponential(3)}</div>
-        </Grid>
+    <>
+      <Grid item lg={6} xs={12}>
+        <div className={`${classes.panel} ${classes.middle}`}>
+          <div className={classes.title}>
+            Earnings
+          </div>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+          >
+            <Grid item>
+              <div className={classes.earningItem}>15min</div>
+              <div className={classes.earningItem}>30min</div>
+              <div className={classes.earningItem}>1h</div>
+              <div className={classes.earningItem}>12h</div>
+              <div className={classes.earningItem}>24h</div>
+              <div className={classes.earningItem}>1week</div>
+              <div className={classes.earningItem}>1month</div>
+            </Grid>
+            <Grid item>
+              <div className={classes.earningItem}>{amounts[0]}</div>
+              <div className={classes.earningItem}>{amounts[1]}</div>
+              <div className={classes.earningItem}>{amounts[2]}</div>
+              <div className={classes.earningItem}>{amounts[3]}</div>
+              <div className={classes.earningItem}>{amounts[4]}</div>
+              <div className={classes.earningItem}>{amounts[5]}</div>
+              <div className={classes.earningItem}>{amounts[6]}</div>
+            </Grid>
+            <Grid item>
+              <div className={classes.earningItem}>$ {earnings[0]}</div>
+              <div className={classes.earningItem}>$ {earnings[1]}</div>
+              <div className={classes.earningItem}>$ {earnings[2]}</div>
+              <div className={classes.earningItem}>$ {earnings[3]}</div>
+              <div className={classes.earningItem}>$ {earnings[4]}</div>
+              <div className={classes.earningItem}>$ {earnings[5]}</div>
+              <div className={classes.earningItem}>$ {earnings[6]}</div>
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
-    </div>
+      <Grid item lg={6} xs={12}>
+        <div className={`${classes.panel} ${classes.middle}`}>
+          <div className={classes.title}>
+            Wallet
+          </div>
+          <div className={classes.walletItem} style={{paddingTop: 60}}>Total coins - {currentAmount}</div>
+          <div className={classes.walletItem}>Total values - $ {currentValue}</div>
+          <Grid 
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            style={{paddingTop: 30}}
+          >
+            <Button className={classes.button} variant="outlined" onClick={handleClickOpen}>Enter Wallet Info</Button>
+          </Grid>
+        </div>
+      </Grid>
+      <Dialog 
+        disableBackdropClick
+        disableEscapeKeyDown
+        open={modalActive} 
+        onClose={handleClose} 
+        aria-labelledby="form-dialog-title"
+        fullWidth
+        maxWidth='sm'
+      >
+        <DialogTitle id="form-dialog-title">Settings</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            please enter wallet id and cron string in here
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="walletid"
+            label="Wallet Id"
+            inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
+            type="text"
+            fullWidth
+            variant="outlined"
+            autoComplete="off"
+            value={walletId}
+            onChange={(e) => setWalletId(e.target.value)}
+            style={{marginTop: 20}}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button className={classes.button} onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button className={classes.button} onClick={handleSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+    
   )
 }
 
@@ -202,19 +330,7 @@ function Home() {
               <PriceInfo />
             </Grid>
           </Grid>
-          <Grid item lg={4} md={6} xs={12}>
-            <EarningInfo amount={amount} />
-          </Grid>
-          <Grid item lg={4} md={6} xs={12}>
-            <div className={`${classes.panel} ${classes.middle}`}>
-
-            </div>
-          </Grid>
-          <Grid item lg={4} md={6} xs={12}>
-            <div className={`${classes.panel} ${classes.middle}`}>
-
-            </div>
-          </Grid>
+          <MiddleInfo amount={amount} />
         </Grid>
       </Container>
     </div>
