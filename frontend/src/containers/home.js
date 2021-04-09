@@ -11,6 +11,7 @@ import {
   DialogActions
 } from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles"
+import {NotificationManager} from 'react-notifications'
 
 import Nav from './layout/nav'
 import {useAsync} from '../service/utils'
@@ -62,7 +63,13 @@ function PriceInfo() {
   const [price, setPrice] = useState(0)
 
   React.useEffect(() => {
-    run(fetchPrice(8757))
+    const interval = setInterval(function () {
+      run(fetchPrice(8757))
+    }, 10000)
+    return () => {
+      clearInterval(interval);
+    }
+    
   }, [run])
   React.useEffect(() => {
     if (status === 'resolved') {
@@ -76,13 +83,15 @@ function PriceInfo() {
   }, [status])
   
   if (status === 'idle') {
-    return 'Submit a pokemon'
+    return <span>Current price: ${price}</span>
   } else if (status === 'pending') {
-    return <span>... Loading</span>
+    if (price === 0)
+      return <span>... Loading</span>
+    else 
+      return <span>Current price: ${price}</span>
   } else if (status === 'rejected') {
     throw error
   } else if (status === 'resolved') {
-    
     return <span>Current price: ${price}</span>
   }
 
@@ -104,6 +113,7 @@ function MiddleInfo(props) {
   const [walletId, setWalletId] = useState('')
 
   const handleClickOpen = () => {
+    setWalletId(setting.walletId)
     setModalActive(true)
   }
   const handleClose = () => {
@@ -114,10 +124,6 @@ function MiddleInfo(props) {
     setModalActive(false)
   }
 
-  useEffect(() => {
-    const tmp = setting?.walletId || ''
-    // setWalletId(tmp)
-  }, [setting])
   useEffect(() => {
     run(createCoin(setting.walletId, amount))
   }, [run, amount])
@@ -278,7 +284,6 @@ function MiddleInfo(props) {
         </DialogActions>
       </Dialog>
     </>
-    
   )
 }
 
@@ -288,7 +293,7 @@ function Home() {
   })
   const [setting] = useSetting()
   const [amount, setAmount] = useState(0)
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
     const interval = setInterval(function () {
@@ -297,18 +302,18 @@ function Home() {
       if (setting.walletId != null && setting.walletId != '') {
         run(fetchBitcoine(setting.walletId))
       }
-    }, 15 * 60000)
+    }, 10000)
     return () => {
       clearInterval(interval);
     }
-  }, [run])
+  }, [run, setting])
   useEffect(() => {
     if (status === 'idle') {
       console.log('idle')
     } else if (status === 'pending') {
       console.log('pending')
     } else if (status === 'rejected') {
-      throw error
+      NotificationManager.error('Please check WalletId', 'Error', 3000)
     } else if (status === 'resolved') {
       setAmount(data.result)
     }

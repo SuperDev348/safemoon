@@ -5,17 +5,11 @@ import {AppBar,
   Typography, 
   IconButton, 
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  DialogActions
+  
 } from '@material-ui/core'
 import {Menu, Settings} from '@material-ui/icons'
 
 import {useStyles} from '../style/material_ui_style'
-import {useSetting} from '../../provider/setting'
 
 function Nav() {
   const classes = useStyles()

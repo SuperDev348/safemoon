@@ -9,8 +9,11 @@ import Home from './containers/home'
 export default function Routes() {
     return (
       <Router>
-        <Route exact path="/" component={Home}>
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
       </Router>
     );
 }

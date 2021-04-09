@@ -1,11 +1,11 @@
-import React from 'react'
+import * as React from 'react'
 
 const SettingContext = React.createContext()
 
 function settingReducer(state, action) {
-  console.log(action)
   switch (action.type) {
     case 'SET': {
+      console.log(action)
       return {...state, [action.settingName]: action.settingData}
     }
     default: {
@@ -16,6 +16,7 @@ function settingReducer(state, action) {
 
 export const SettingProvider = (props) => {
   const [setting, dispatch] = React.useReducer(settingReducer, {price: 0, walletId: ''})
+  console.log(setting)
   return <SettingContext.Provider value={[setting, dispatch]} {...props} />
 }
 

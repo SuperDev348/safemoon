@@ -20,15 +20,15 @@ function fetchBitcoine(walletId) {
       },
     })
     .then(async response => {
-      const {result} = await response.json()
+      const {result, message} = await response.json()
       if (response.ok) {
         const res = {result}
         console.log(result)
-        if (res) {
+        if (res && message !== 'NOTOK') {
           res.fetchedAt = formatDate(new Date())
           return res
         } else {
-          // return Promise.reject(new Error(`No data with the id "${id}"`))
+          return Promise.reject(new Error(`No data with the walletId "${walletId}"`))
         }
       } else {
         // handle the graphql errors
