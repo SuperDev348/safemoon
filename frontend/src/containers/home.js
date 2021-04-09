@@ -65,7 +65,7 @@ function PriceInfo() {
   React.useEffect(() => {
     const interval = setInterval(function () {
       run(fetchPrice(8757))
-    }, 10000)
+    }, 20000)
     return () => {
       clearInterval(interval);
     }
@@ -302,7 +302,7 @@ function Home() {
       if (setting.walletId != null && setting.walletId != '') {
         run(fetchBitcoine(setting.walletId))
       }
-    }, 10000)
+    }, 15 * 60000)
     return () => {
       clearInterval(interval);
     }
