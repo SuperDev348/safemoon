@@ -132,7 +132,7 @@ function MiddleInfo(props) {
       console.log('init earning')
       run(getCoinByWalletId(setting.walletId))
     }
-  }, [setting?.walletId, run])
+  }, [setting, run])
   useEffect(() => {
     if (status === 'idle') {
       console.log('idle')
