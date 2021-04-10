@@ -139,8 +139,5 @@ export const getCron = (str) => {
 }
 
 export const displayNumber = (value) => {
-  if (value.toString().length > 6) 
-    return value.toExponential(3)
-  else
-    return value
+  return value.toLocaleString()
 }

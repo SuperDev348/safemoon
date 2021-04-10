@@ -19,7 +19,7 @@ import {fetchPrice} from '../api/price'
 import {fetchBitcoine} from '../api/bitcoin'
 import {getCoinByWalletId, createCoin} from '../api/coin'
 import {useSetting} from '../provider/setting'
-import {setCookie} from '../service/cookie'
+import {getCookie, setCookie} from '../service/cookie'
 import {displayNumber} from '../service/textService'
 
 const useStyles = makeStyles((theme) => ({
@@ -65,36 +65,33 @@ function PriceInfo() {
   const [price, setPrice] = useState(0)
 
   React.useEffect(() => {
+    run(fetchPrice(8757))
     const interval = setInterval(function () {
       run(fetchPrice(8757))
     }, 20000)
     return () => {
       clearInterval(interval);
     }
-    
   }, [run])
   React.useEffect(() => {
     if (status === 'resolved') {
-      const initPrice = data?.quote?.USD?.price
-      let tmp = initPrice
-      if (tmp.toString().length > 6)
-        tmp = tmp.toExponential(3)
+      const tmp = data?.quote?.USD?.price
       setPrice(tmp)
-      dispatch({type: 'SET', settingName: 'price', settingData: initPrice * 100000000})
+      dispatch({type: 'SET', settingName: 'price', settingData: tmp})
     }
   }, [status])
   
   if (status === 'idle') {
-    return <span>Current price: ${price}</span>
+    return <span>Current price: ${price.toFixed(10)}</span>
   } else if (status === 'pending') {
     if (price === 0)
       return <span>... Loading</span>
     else 
-      return <span>Current price: ${price}</span>
+      return <span>Current price: ${price.toFixed(10)}</span>
   } else if (status === 'rejected') {
     throw error
   } else if (status === 'resolved') {
-    return <span>Current price: ${price}</span>
+    return <span>Current price: ${price.toFixed(10)}</span>
   }
 
   throw new Error('This should be impossible')
@@ -128,11 +125,29 @@ function MiddleInfo(props) {
   }
 
   useEffect(() => {
+    // first display from cookie
+    const curAmount = getCookie('currentAmount')
+    const curValue = getCookie('currentValue')
+    if (curAmount != '')
+      setCurrentAmount(parseInt(curAmount))
+    if (curValue != '')
+      setCurrentValue(parseFloat(curValue))
+    const tmpAmounts = getCookie('amounts')
+    const tmpEarnings = getCookie('earnings')
+    if (tmpAmounts != '') {
+      setAmounts(JSON.parse(tmpAmounts))
+      console.log(JSON.parse(tmpAmounts))
+    }
+    if (tmpEarnings != '')
+      setEarnings(JSON.parse(tmpEarnings))
+  }, [])
+  useEffect(() => {
     run(createCoin(setting.walletId, amount))
   }, [run, amount])
   useEffect(() => {
     if (setting?.walletId != null && setting.walletId != '') {
       console.log('init earning')
+      // get init data from backend
       run(getCoinByWalletId(setting.walletId))
     }
   }, [setting, run])
@@ -162,17 +177,21 @@ function MiddleInfo(props) {
             else {
               let tmp = data[0] - item
               tmpAmounts[index - 1] = tmp
-              tmpEarnings[index - 1] = tmp * setting?.price / 100000000
+              tmpEarnings[index - 1] = tmp * setting?.price
             }
           }
         })
         // set Wallet values
         setCurrentAmount(data[0])
-        setCurrentValue(data[0] * setting?.price / 100000000)
+        setCurrentValue(data[0] * setting?.price)
+        setCookie('currentAmount', data[0], 10)
+        setCookie('currentValue', data[0] * setting?.price, 10)
         //--set Wallet values
+        setCookie('amounts', JSON.stringify(tmpAmounts), 10)
+        setCookie('earnings', JSON.stringify(tmpEarnings), 10)
+        setAmounts(tmpAmounts)
+        setEarnings(tmpEarnings)
       }
-      setAmounts(tmpAmounts)
-      setEarnings(tmpEarnings)
     }
   }, [status])
 
@@ -293,7 +312,7 @@ function Home() {
       if (setting.walletId != null && setting.walletId != '') {
         run(fetchBitcoine(setting.walletId))
       }
-    }, 10000)
+    }, 15 * 60000)
     return () => {
       clearInterval(interval);
     }
