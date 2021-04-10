@@ -312,7 +312,7 @@ function Home() {
       if (setting.walletId != null && setting.walletId != '') {
         run(fetchBitcoine(setting.walletId))
       }
-    }, 15 * 60000)
+    }, 10000)
     return () => {
       clearInterval(interval);
     }
@@ -325,7 +325,8 @@ function Home() {
     } else if (status === 'rejected') {
       NotificationManager.error('Please check WalletId', 'Error', 3000)
     } else if (status === 'resolved') {
-      setAmount(data.result)
+      const tmp = Math.floor(data.result/1000000000)
+      setAmount(tmp)
     }
   }, [status])
 
