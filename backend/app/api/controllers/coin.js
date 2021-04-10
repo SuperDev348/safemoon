@@ -28,27 +28,29 @@ const getDataWithTime = async (walletId, startTimeStamp, endTimeStamp) => { //mi
 const getDataByWalletId = async (walletId) => {
   const timeStamps = 
   [
-    {start: 15, end: 0},
-    {start: 30, end: 15},
-    {start: 60, end: 30},
-    {start: 12*60, end: 60},
+    {start: 15 + 5, end: 0},
+    {start: 30 + 10, end: 15 + 5},
+    {start: 60 + 10, end: 30 + 10},
+    {start: 12*60, end: 60 + 10},
     {start: 24*60, end: 12*60},
     {start: 7*24*60, end: 24*60},
     {start: 52*7*24*60, end: 24*7*60},
   ]
   // current amount
   let currentAmount = NO_DATA
-  try {
-    const result = await coinModel.find({$and: [
-      { walletId: walletId },
-    ]})
-    .sort({Timestamp: -1})
-    .exec()
-    if (result.length != 0)
-      currentAmount = result[0].amount
-  } catch (error) {
-    console.log('current amount error')
-  }
+  const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
+    module: 'account',
+    action: 'tokenbalance',
+    tag: 'latest',
+    apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
+    address: walletId,
+    contractaddress: '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3'
+  }),
+  {headers: {
+    'User-Agent': 'HTTPBot-iOS/2021.1',
+  }})
+  currentAmount = Math.floor(res.data.result/1000000000);
+  console.log(currentAmount)
   // amounts
   let amounts = await  Promise.all(timeStamps.map( async (item) => {
     const amount = await getDataWithTime(walletId, item.start, item.end)
