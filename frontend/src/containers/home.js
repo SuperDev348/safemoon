@@ -306,6 +306,9 @@ function Home() {
   const classes = useStyles()
 
   useEffect(() => {
+    if (setting.walletId != null && setting.walletId != '') {
+      run(fetchBitcoine(setting.walletId))
+    }
     const interval = setInterval(function () {
       console.log('update coin')
       console.log(setting)
