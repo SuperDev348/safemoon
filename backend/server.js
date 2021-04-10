@@ -27,7 +27,7 @@ setInterval(function () {
       coinController.create(wallet.walletId)
     }
   })
-}, 30000)
+}, 15 * 60000)
 
 const app = express();
 

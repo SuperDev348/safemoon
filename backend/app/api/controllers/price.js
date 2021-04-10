@@ -25,7 +25,7 @@ module.exports = {
       )
     .then((result) => {
       let price={};
-      price.price=result?.data?.data[id]?.quote?.USD?.price;
+      price.price=result.data.data[id].quote.USD.price;
       priceModel.create(price, function (err, result) {
         if (err) {
           console.log(err)
