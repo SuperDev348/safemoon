@@ -1,4 +1,4 @@
-
+const axios = require('axios');
 const coinModel = require('../models/coin');	
 
 const NO_DATA = -1
@@ -72,6 +72,7 @@ module.exports = {
   getByWalletId: function(req, res, next) {
     getDataByWalletId(req.params.Id)
     .then((result) => {
+      console.log(result)
       res.status(200).json({msg: "Found!", data: result});
     })
   },
@@ -110,35 +111,40 @@ module.exports = {
     });
   },
 
-  create: function(req, res, next) {
+  create: function(walletId) {
     var coin={};
-    coin.walletId=req.body.walletId;
-    coin.amount=req.body.amount;
-    console.log(coin)
-    if (!coin.walletId || !coin.amount) {
-      getDataByWalletId(coin.walletId)
-      .then((data) => {
-        res.status(200).json({msg: "No data", data: data});
-      })
-    }
-    else {
+    coin.walletId=walletId;
+    axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
+        module: 'account',
+        action: 'tokenbalance',
+        tag: 'latest',
+        apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
+        address: coin.walletId,
+        contractaddress: '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3'
+      }),
+      {headers: {
+        'User-Agent': 'HTTPBot-iOS/2021.1',
+      }},
+      )
+    .then((res) => {
+      coin.amount=Math.floor(res.data.result/1000000000);
+      console.log(coin)
       coinModel.create(coin, function (err, result) {
         if (err) {					
           if (err.errors) {	
             if (err.errors.walletId) {
-              res.status(400).json({ msg: err.errors.walletId.message });
+              console.log('coin error: ' + err.errors.walletId.message)
               return;
               }
           }
-          res.status(400).json({ msg: "Creat failed", data: null});
-          }
-          else {
-            getDataByWalletId(coin.walletId)
-            .then((data) => {
-              res.status(200).json({msg: "Created successfully!", data: data});
-            })
-          }
+          console.log('coin create fail')
+        }
+        else {
+          console.log('success coin ' + walletId)
+        }
       });
-    }
+    }).catch((err) => {
+      console.log('bitcoin api error')
+    });
   },
 }					

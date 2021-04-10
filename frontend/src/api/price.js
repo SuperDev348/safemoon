@@ -5,10 +5,10 @@ const formatDate = date =>
     date.getSeconds(),
   ).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
 
-function fetchPrice(id) {
+function fetchPrice() {
 
   return window
-    .fetch(`${siteConfig.apiUrl}/api/price/${id}`, {
+    .fetch(`${siteConfig.apiUrl}/api/price`, {
       method: 'GET',
       headers: {
       },
@@ -16,12 +16,10 @@ function fetchPrice(id) {
     .then(async response => {
       const {data} = await response.json()
       if (response.ok) {
-        const res = data[id]
-        if (res) {
-          res.fetchedAt = formatDate(new Date())
-          return res
+        if (data) {
+          return data
         } else {
-          return Promise.reject(new Error(`No data with the id "${id}"`))
+          return Promise.reject(new Error(`No data`))
         }
       } else {
         // handle the graphql errors

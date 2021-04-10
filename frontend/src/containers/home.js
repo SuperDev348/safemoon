@@ -18,6 +18,7 @@ import {useAsync} from '../service/utils'
 import {fetchPrice} from '../api/price'
 import {fetchBitcoine} from '../api/bitcoin'
 import {getCoinByWalletId, createCoin} from '../api/coin'
+import {createWallet} from '../api/wallet'
 import {useSetting} from '../provider/setting'
 import {getCookie, setCookie} from '../service/cookie'
 import {displayNumber} from '../service/textService'
@@ -65,19 +66,18 @@ function PriceInfo() {
   const [price, setPrice] = useState(0)
 
   React.useEffect(() => {
-    run(fetchPrice(8757))
+    run(fetchPrice())
     const interval = setInterval(function () {
-      run(fetchPrice(8757))
-    }, 20000)
+      run(fetchPrice())
+    }, 30000)
     return () => {
       clearInterval(interval);
     }
   }, [run])
   React.useEffect(() => {
     if (status === 'resolved') {
-      const tmp = data?.quote?.USD?.price
-      setPrice(tmp)
-      dispatch({type: 'SET', settingName: 'price', settingData: tmp})
+      setPrice(data.price)
+      dispatch({type: 'SET', settingName: 'price', settingData: data.price})
     }
   }, [status])
   
@@ -97,17 +97,12 @@ function PriceInfo() {
   throw new Error('This should be impossible')
 }
 
-function MiddleInfo(props) {
+function WalletInfo(props) {
   const {data, status, error, run} = useAsync({
     status: 'idle',
   })
-  const {amount} = props
-  const classes = useStyles();
   const [setting, dispatch] = useSetting()
-  const [amounts, setAmounts] = useState([0, 0, 0, 0, 0, 0, 0])
-  const [earnings, setEarnings] = useState([0, 0, 0, 0, 0, 0, 0])
-  const [currentAmount, setCurrentAmount] = useState(0)
-  const [currentValue, setCurrentValue] = useState(0)
+  const classes = useStyles();
   const [modalActive, setModalActive] = React.useState(false)
   const [walletId, setWalletId] = useState('')
 
@@ -119,10 +114,77 @@ function MiddleInfo(props) {
     setModalActive(false)
   }
   const handleSave = () => {
-    dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
-    setCookie('walletId', walletId, 10)
-    setModalActive(false)
+    run(createWallet(walletId))
   }
+
+  useEffect(() => {
+    if (status === 'idle') {
+      console.log('idle')
+    } else if (status === 'pending') {
+      console.log('pending')
+    } else if (status === 'rejected') {
+      NotificationManager.error(error, 'Error', 3000)
+    } else if (status === 'resolved') {
+      dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
+      setCookie('walletId', walletId, 10)
+      setModalActive(false)
+    }
+  }, [status])
+  return (
+    <>
+      <Button className={classes.button} variant="outlined" onClick={handleClickOpen}>Enter Wallet Info</Button>
+      <Dialog 
+        disableBackdropClick
+        disableEscapeKeyDown
+        open={modalActive} 
+        onClose={handleClose} 
+        aria-labelledby="form-dialog-title"
+        fullWidth
+        maxWidth='sm'
+      >
+        <DialogTitle id="form-dialog-title">Settings</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            please enter wallet id and cron string in here
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="walletid"
+            label="Wallet Id"
+            inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
+            type="text"
+            fullWidth
+            variant="outlined"
+            autoComplete="off"
+            value={walletId}
+            onChange={(e) => setWalletId(e.target.value)}
+            style={{marginTop: 20}}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button className={classes.button} onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button className={classes.button} onClick={handleSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
+
+function MiddleInfo() {
+  const {data, status, error, run} = useAsync({
+    status: 'idle',
+  })
+  const classes = useStyles();
+  const [setting, dispatch] = useSetting()
+  const [amounts, setAmounts] = useState([0, 0, 0, 0, 0, 0, 0])
+  const [earnings, setEarnings] = useState([0, 0, 0, 0, 0, 0, 0])
+  const [currentAmount, setCurrentAmount] = useState(0)
+  const [currentValue, setCurrentValue] = useState(0)
 
   useEffect(() => {
     // first display from cookie
@@ -142,13 +204,18 @@ function MiddleInfo(props) {
       setEarnings(JSON.parse(tmpEarnings))
   }, [])
   useEffect(() => {
-    run(createCoin(setting.walletId, amount))
-  }, [run, amount])
-  useEffect(() => {
-    if (setting?.walletId != null && setting.walletId != '') {
-      console.log('init earning')
-      // get init data from backend
+    if (setting.walletId != null && setting.walletId != '') {
       run(getCoinByWalletId(setting.walletId))
+    }
+    const interval = setInterval(function () {
+      console.log('update coin')
+      console.log(setting)
+      if (setting.walletId != null && setting.walletId != '') {
+        run(getCoinByWalletId(setting.walletId))
+      }
+    }, 30000)
+    return () => {
+      clearInterval(interval);
     }
   }, [setting, run])
   useEffect(() => {
@@ -251,87 +318,17 @@ function MiddleInfo(props) {
             alignItems="center"
             style={{paddingTop: 30}}
           >
-            <Button className={classes.button} variant="outlined" onClick={handleClickOpen}>Enter Wallet Info</Button>
+           <WalletInfo /> 
           </Grid>
         </div>
       </Grid>
-      <Dialog 
-        disableBackdropClick
-        disableEscapeKeyDown
-        open={modalActive} 
-        onClose={handleClose} 
-        aria-labelledby="form-dialog-title"
-        fullWidth
-        maxWidth='sm'
-      >
-        <DialogTitle id="form-dialog-title">Settings</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            please enter wallet id and cron string in here
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="walletid"
-            label="Wallet Id"
-            inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
-            type="text"
-            fullWidth
-            variant="outlined"
-            autoComplete="off"
-            value={walletId}
-            onChange={(e) => setWalletId(e.target.value)}
-            style={{marginTop: 20}}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button className={classes.button} onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button className={classes.button} onClick={handleSave} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   )
 }
 
 function Home() {
-  const {data, status, error, run} = useAsync({
-    status: 'idle',
-  })
   const [setting] = useSetting()
-  const [amount, setAmount] = useState(0)
   const classes = useStyles()
-
-  useEffect(() => {
-    if (setting.walletId != null && setting.walletId != '') {
-      run(fetchBitcoine(setting.walletId))
-    }
-    const interval = setInterval(function () {
-      console.log('update coin')
-      console.log(setting)
-      if (setting.walletId != null && setting.walletId != '') {
-        run(fetchBitcoine(setting.walletId))
-      }
-    }, 10000)
-    return () => {
-      clearInterval(interval);
-    }
-  }, [run, setting])
-  useEffect(() => {
-    if (status === 'idle') {
-      console.log('idle')
-    } else if (status === 'pending') {
-      console.log('pending')
-    } else if (status === 'rejected') {
-      NotificationManager.error('Please check WalletId', 'Error', 3000)
-    } else if (status === 'resolved') {
-      const tmp = Math.floor(data.result/1000000000)
-      setAmount(tmp)
-    }
-  }, [status])
 
   return (
     <div>
@@ -349,7 +346,7 @@ function Home() {
               <PriceInfo />
             </Grid>
           </Grid>
-          <MiddleInfo amount={amount} />
+          <MiddleInfo />
         </Grid>
       </Container>
     </div>
