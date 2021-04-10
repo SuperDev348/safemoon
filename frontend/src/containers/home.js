@@ -224,7 +224,7 @@ function MiddleInfo() {
     } else if (status === 'pending') {
       console.log('pending')
     } else if (status === 'rejected') {
-      throw error
+      console.log(error)
     } else if (status === 'resolved') {
       let tmpAmounts = [0, 0, 0, 0, 0, 0, 0]
       let tmpEarnings = [0, 0, 0, 0, 0, 0, 0]
