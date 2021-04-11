@@ -15,7 +15,7 @@ function settingReducer(state, action) {
 }
 
 export const SettingProvider = (props) => {
-  const [setting, dispatch] = React.useReducer(settingReducer, {price: 0, walletId: ''})
+  const [setting, dispatch] = React.useReducer(settingReducer, {price: 0, maxPrice: 0, minPrice: 0, walletId: ''})
   console.log(setting)
   return <SettingContext.Provider value={[setting, dispatch]} {...props} />
 }

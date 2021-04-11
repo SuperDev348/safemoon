@@ -4,7 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Home from './containers/home'
+import Home from './containers/home/index'
 import {getCookie} from './service/cookie'
 import {useSetting} from './provider/setting'
 

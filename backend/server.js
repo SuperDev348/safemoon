@@ -7,6 +7,7 @@ const coin = require('./routes/coin');
 const users = require('./routes/users');
 const price = require('./routes/price');
 const wallet = require('./routes/wallet');
+const market = require('./routes/market');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -16,7 +17,12 @@ const { port, secretKey } = Config;
 // store price every 30s
 const priceController = require('./app/api/controllers/price');
 setInterval(function () {
-  priceController.createPrice()
+  priceController.create()
+}, 30000)
+// store market price every 30s
+const marketController = require('./app/api/controllers/market');
+setInterval(function () {
+  marketController.create()
 }, 30000)
 const walletController = require('./app/api/controllers/wallet');
 const coinController = require('./app/api/controllers/coin');
@@ -55,6 +61,7 @@ app.use('/api/users',[authenticate, authError], users);
 app.use('/api/coin', coin);
 app.use('/api/price', price);
 app.use('/api/wallet', wallet);
+app.use('/api/market', market);
 // handle errors
 app.use(function(err, req, res, next) {
 	console.log(err);

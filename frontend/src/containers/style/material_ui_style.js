@@ -14,4 +14,32 @@ export const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     outline: 'none !important',
   },
+  panel: {
+    border: 'solid 1px #e6cbcb',
+    borderRadius: 5,
+    padding: 20
+  },
+  title: {
+    fontSize: 25,
+    padding: 5
+  },
+  earningItem: {
+    fontSize: 20,
+    padding: 2
+  },
+  walletItem: {
+    fontSize: 22,
+    padding: 10,
+    textAlign: 'center'
+  },
+  middle: {
+    height: 400
+  },
+  price: {
+    height: 150,
+    fontSize: 35
+  },
+  twitter: {
+    height: 300
+  }
 }))
