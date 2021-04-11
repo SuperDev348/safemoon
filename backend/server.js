@@ -18,12 +18,12 @@ const { port, secretKey } = Config;
 const priceController = require('./app/api/controllers/price');
 setInterval(function () {
   priceController.create()
-}, 30000)
+}, 3 * 60000)
 // store market price every 30s
 const marketController = require('./app/api/controllers/market');
 setInterval(function () {
   marketController.create()
-}, 30000)
+}, 3 * 60000)
 const walletController = require('./app/api/controllers/wallet');
 const coinController = require('./app/api/controllers/coin');
 // const wallets = walletController.getAll()

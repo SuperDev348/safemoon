@@ -1,0 +1,48 @@
+import React, {useState, useEffect, useMemo} from 'react'
+import {Grid} from '@material-ui/core'
+
+import {useStyles} from "../style/material_ui_style"
+import {useAsync} from '../../service/utils'
+import {getCookie, setCookie} from '../../service/cookie'
+import {fetchMarket} from '../../api/market'
+
+const EarningsPerDay = (props) => {
+  const {data, status, error, run} = useAsync({
+    status: 'idle',
+  })
+  const classes = useStyles();
+  const [market, setMarket] = useState([])
+
+  useEffect(() => {
+    run(fetchMarket())
+    const interval = setInterval(function () {
+      run(fetchMarket())
+    }, 30000)
+    return () => {
+      clearInterval(interval);
+    }
+  }, [run])
+  useEffect(() => {
+    if (status === 'idle') {
+      console.log('idle')
+    } else if (status === 'pending') {
+      console.log('pending')
+    } else if (status === 'rejected') {
+      console.log(error)
+    } else if (status === 'resolved') {
+      setMarket(data)
+    }
+  }, [status])
+  return (
+    <Grid item lg={6} xs={12}>
+      <div className={`${classes.panel} ${classes.middle}`}>
+        <div className={classes.title}>
+          Earnings per day
+        </div>
+        
+      </div>
+    </Grid>
+  )
+}
+
+export default EarningsPerDay

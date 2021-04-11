@@ -10,6 +10,8 @@ const  PriceInfo = () => {
   })
   const [setting, dispatch] = useSetting()
   const [price, setPrice] = useState(0)
+  const [max, setMax] = useState(0)
+  const [min, setMin] = useState(0)
 
   React.useEffect(() => {
     run(fetchPrice())
@@ -23,23 +25,41 @@ const  PriceInfo = () => {
   React.useEffect(() => {
     if (status === 'resolved') {
       setPrice(data?.current?.price)
+      setMax(data?.max?.price)
+      setMin(data?.min?.price)
       dispatch({type: 'SET', settingName: 'price', settingData: data?.current?.price})
-      dispatch({type: 'SET', settingName: 'maxPrice', settingData: data?.max?.price})
-      dispatch({type: 'SET', settingName: 'minPrice', settingData: data?.min?.price})
     }
   }, [status])
   
   if (status === 'idle') {
-    return <span>Current price: ${price.toFixed(10)}</span>
+    return (
+      <div>
+        <div>Current price: ${price.toFixed(10)}</div>
+        <div>Max price today: ${max.toFixed(10)}</div>
+        <div>Min price today: ${min.toFixed(10)}</div>
+      </div>
+    )
   } else if (status === 'pending') {
     if (price === 0)
-      return <span>... Loading</span>
+      return <div>... Loading</div>
     else 
-      return <span>Current price: ${price.toFixed(10)}</span>
+      return (
+      <div>
+        <div>Current price: ${price.toFixed(10)}</div>
+        <div>Max price today: ${max.toFixed(10)}</div>
+        <div>Min price today: ${min.toFixed(10)}</div>
+      </div>
+    )
   } else if (status === 'rejected') {
     throw error
   } else if (status === 'resolved') {
-    return <span>Current price: ${price.toFixed(10)}</span>
+    return (
+      <div>
+        <div>Current price: ${price.toFixed(10)}</div>
+        <div>Max price today: ${max.toFixed(10)}</div>
+        <div>Min price today: ${min.toFixed(10)}</div>
+      </div>
+    )
   }
 
   throw new Error('This should be impossible')

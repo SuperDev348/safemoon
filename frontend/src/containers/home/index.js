@@ -3,24 +3,12 @@ import {
   Container,
   Grid, 
 } from '@material-ui/core'
-import {makeStyles} from "@material-ui/core/styles"
 
 import Nav from '../layout/nav'
+import {useStyles} from '../style/material_ui_style'
 import {useSetting} from '../../provider/setting'
 import PriceInfo from './priceInfo'
 import MiddleInfo from './middleInfo'
-
-const useStyles = makeStyles((theme) => ({
-  panel: {
-    border: 'solid 1px #e6cbcb',
-    borderRadius: 5,
-    padding: 20
-  },
-  price: {
-    height: 150,
-    fontSize: 35
-  },
-}))
 
 function Home() {
   const [setting] = useSetting()

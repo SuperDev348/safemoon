@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   price: {
     height: 150,
-    fontSize: 35
+    fontSize: 20
   },
   twitter: {
     height: 300

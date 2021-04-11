@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import {Grid, Button} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles"
+import { Edit } from '@material-ui/icons'
 
 import {useAsync} from '../../service/utils'
 import {displayNumber} from '../../service/textService'
@@ -11,7 +12,7 @@ import {useStyles} from '../style/material_ui_style'
 import WalletInfo from './walletInfo'
 import MarketInfo from './marketInfo'
 import EditEarning from './editEarning'
-import { Edit } from '@material-ui/icons'
+import EarningsPerDay from './earningsPerDay'
 
 const MiddleInfo = () => {
   const {data, status, error, run} = useAsync({
@@ -150,8 +151,7 @@ const MiddleInfo = () => {
           </div>
           <div className={classes.walletItem}>Total coins - {displayNumber(currentAmount)}</div>
           <div className={classes.walletItem}>Total values - $ {displayNumber(currentValue)}</div>
-          <div className={classes.walletItem}>Max price today - $ {setting.maxPrice.toFixed(10)}</div>
-          <div className={classes.walletItem}>Min price today - $ {setting.minPrice.toFixed(10)}</div>
+          
           <Grid 
             container
             direction="row"
@@ -163,6 +163,7 @@ const MiddleInfo = () => {
           </Grid>
         </div>
       </Grid>
+      <EarningsPerDay />
       <MarketInfo />
     </>
   )
