@@ -83,7 +83,7 @@ const EditEarning = (props) => {
             autoFocus
             margin="dense"
             id="amount"
-            label="Wallet Id"
+            label="Amount"
             inputProps={{min: 0, style: { textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 10 }}}
             type="text"
             fullWidth

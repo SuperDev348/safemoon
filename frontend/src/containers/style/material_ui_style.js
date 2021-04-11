@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   button: {
-    textTransform: 'none',
+    textTransform: 'none !important',
     outline: 'none !important',
   },
   panel: {
