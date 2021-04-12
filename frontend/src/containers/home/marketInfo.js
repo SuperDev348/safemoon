@@ -36,13 +36,26 @@ const MarketInfo = (props) => {
   return (
     <Grid item lg={6} xs={12}>
       <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title}>
+        <div className={classes.title} style={{paddingBottom: 30}}>
           Market
         </div>
         {
           market.map((item, index) => {
             return (
-              <div className={classes.walletItem} key={index}>{item?.label} - $ {item?.price?.price.toFixed(10)}</div>
+              <Grid
+                container
+                className={classes.marketItem}
+                direction="row"
+                justify="space-between"
+                key={index}
+              >
+                <Grid item>
+                    {item?.label}
+                </Grid>
+                <Grid item>
+                    ${item?.price?.price.toFixed(10)}
+                </Grid>
+              </Grid>
             )
           })
         }

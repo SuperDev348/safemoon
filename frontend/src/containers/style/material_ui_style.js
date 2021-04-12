@@ -32,6 +32,10 @@ export const useStyles = makeStyles((theme) => ({
     padding: 10,
     textAlign: 'center'
   },
+  marketItem: {
+    fontSize: 20,
+    padding: 2
+  },
   middle: {
     height: 400
   },

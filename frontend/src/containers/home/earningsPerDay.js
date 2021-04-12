@@ -60,23 +60,25 @@ const EarningsPerDay = (props) => {
   return (
     <Grid item lg={6} xs={12}>
       <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title} style={{paddingBottom: 100}}>
+        <div className={classes.title} style={{paddingBottom: 20}}>
           Earnings per day
         </div>
-        <ResponsiveContainer width="99%" aspect={3}>
-          <BarChart
-            data={amounts}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="earning" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div style={{height: '100%', width: '100%'}}>
+          <ResponsiveContainer minHeight={100} width="100%" height="80%">
+            <BarChart
+              data={amounts}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="earning" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
+      </div>
     </Grid>
   )
 }
