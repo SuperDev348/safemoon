@@ -24,6 +24,11 @@ const MiddleInfo = () => {
   const [earnings, setEarnings] = useState([0, 0, 0, 0, 0, 0, 0])
   const [currentAmount, setCurrentAmount] = useState(0)
   const [currentValue, setCurrentValue] = useState(0)
+  const refreshEarning = () => {
+    if (setting.walletId != null && setting.walletId != '') {
+      run(getCoinByWalletId(setting.walletId))
+    }
+  }
 
   useEffect(() => {
     // first display from cookie
@@ -141,7 +146,7 @@ const MiddleInfo = () => {
               <div className={classes.earningItem}>$ {displayNumber(earnings[6])}</div>
             </Grid>
           </Grid>
-          <EditEarning />
+          <EditEarning refresh={refreshEarning} />
         </div>
       </Grid>
       <Grid item lg={6} xs={12}>

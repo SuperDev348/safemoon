@@ -51,7 +51,7 @@ const  PriceInfo = () => {
       </div>
     )
   } else if (status === 'rejected') {
-    throw error
+    console.log(error)
   } else if (status === 'resolved') {
     return (
       <div>

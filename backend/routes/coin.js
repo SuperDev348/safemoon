@@ -4,7 +4,8 @@ const Controller = require('../app/api/controllers/coin');
 
 router.get('/', Controller.getAll);
 router.get('/:Id', Controller.getByWalletId);
+router.get('/day/:Id', Controller.getPerDay);
 router.put('/:Id', Controller.updateById);
-router.delete('/:Id', Controller.deleteById);
+router.delete('/:Id', Controller.deleteByWalletId);
 
 module.exports = router;

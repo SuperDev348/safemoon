@@ -1,27 +1,44 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import {Grid} from '@material-ui/core'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts"
 
 import {useStyles} from "../style/material_ui_style"
 import {useAsync} from '../../service/utils'
+import {useSetting} from '../../provider/setting'
 import {getCookie, setCookie} from '../../service/cookie'
-import {fetchMarket} from '../../api/market'
+import {getDataPerDay} from '../../api/coin'
 
 const EarningsPerDay = (props) => {
   const {data, status, error, run} = useAsync({
     status: 'idle',
   })
+  const [setting] = useSetting()
   const classes = useStyles();
-  const [market, setMarket] = useState([])
+  const [amounts, setAmounts] = useState([])
 
   useEffect(() => {
-    run(fetchMarket())
+    if (setting.walletId != null && setting.walletId != '') {
+      run(getDataPerDay(setting.walletId))
+    }
     const interval = setInterval(function () {
-      run(fetchMarket())
+
+      if (setting.walletId != null && setting.walletId != '') {
+        run(getDataPerDay(setting.walletId))
+      }
     }, 30000)
     return () => {
       clearInterval(interval);
     }
-  }, [run])
+  }, [run, setting])
   useEffect(() => {
     if (status === 'idle') {
       console.log('idle')
@@ -30,17 +47,36 @@ const EarningsPerDay = (props) => {
     } else if (status === 'rejected') {
       console.log(error)
     } else if (status === 'resolved') {
-      setMarket(data)
+      if (data.length != 0) {
+        const tmp = data.map((item) => {
+          const amount = item.amount
+          const time = `${( new Date(item.time)).getMonth() + 1}-${(new Date(item.time)).getDate()}`
+          return {time: time, earning: amount}
+        })
+        setAmounts(tmp)
+      }
     }
   }, [status])
   return (
     <Grid item lg={6} xs={12}>
       <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title}>
+        <div className={classes.title} style={{paddingBottom: 100}}>
           Earnings per day
         </div>
-        
-      </div>
+        <ResponsiveContainer width="99%" aspect={3}>
+          <BarChart
+            data={amounts}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="time" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="earning" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+        </div>
     </Grid>
   )
 }

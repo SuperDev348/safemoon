@@ -1,12 +1,8 @@
 const axios = require('axios');
 const coinModel = require('../models/coin');	
 
-let isCreating = false
 const NO_DATA = -1
-const getDataWithTime = async (walletId, startTimeStamp, endTimeStamp) => { //minutes
-  const currentDate = new Date()
-  const startTime = new Date(currentDate.getTime() - startTimeStamp*60000)
-  const endTime = new Date(currentDate.getTime() - endTimeStamp*60000)
+const getDataWithTime = async (walletId, startTime, endTime) => {
   try {
     const result = await coinModel.find({$and: [
         { walletId: walletId },
@@ -14,15 +10,10 @@ const getDataWithTime = async (walletId, startTimeStamp, endTimeStamp) => { //mi
       ]})
     .sort({Timestamp: 1})
     .exec()
-    // console.log(result)
-    if (result.length == 0)
-      return NO_DATA
-    else {
-      return result[0].amount
-    }
+    return result
   } catch (error) {
     console.log('error')
-    return NO_DATA
+    return []
   }
 }
 
@@ -37,6 +28,7 @@ const getDataByWalletId = async (walletId) => {
     {start: 7*24*60, end: 24*60},
     {start: 52*7*24*60, end: 24*7*60},
   ]
+  const currentDate = new Date()
   // current amount
   let currentAmount = NO_DATA
   const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
@@ -54,10 +46,38 @@ const getDataByWalletId = async (walletId) => {
   console.log(currentAmount)
   // amounts
   let amounts = await  Promise.all(timeStamps.map( async (item) => {
-    const amount = await getDataWithTime(walletId, item.start, item.end)
-    return amount
+    let startTime = new Date(currentDate.getTime() - item.start*60000)
+    let endTime = new Date(currentDate.getTime() - item.end*60000)
+    const result = await getDataWithTime(walletId, startTime, endTime)
+    if (result.length == 0)
+      return NO_DATA
+    else {
+      return result[0].amount
+    }
   }))
   amounts = [currentAmount, ...amounts]
+  return amounts
+}
+
+const getDataPerDay = async (walletId) => {
+  let end = new Date();
+  end.setHours(0);
+  end.setMinutes(0);
+  let timeStamps = []
+  for (let i=0; i<6; i++) {
+    let item = {start: end.getTime() - (i + 1) * 24 * 60 * 60000, end: end.getTime() - i * 24 * 60 * 6000}
+    timeStamps = [item, ...timeStamps]
+  }
+  timeStamps = [...timeStamps, {start: end, end: (new Date())}]
+  let amounts = await  Promise.all(timeStamps.map( async (item) => {
+    const result = await getDataWithTime(walletId, item.start, item.end)
+    if (result.length == 0)
+      return {amount: 0, time: item.start}
+    else {
+      let amount = result[result.length - 1].amount - result[0].amount
+      return {amount: amount, time: item.start}
+    }
+  }))
   return amounts
 }
 
@@ -73,15 +93,18 @@ module.exports = {
   },
 
   getByWalletId: function(req, res, next) {
-    if (isCreating)
-      res.status(400).json({ msg: "Cross error" });
-    else {
-      getDataByWalletId(req.params.Id)
-      .then((result) => {
-        console.log(result)
-        res.status(200).json({msg: "Found!", data: result});
-      })
-    }
+    getDataByWalletId(req.params.Id)
+    .then((result) => {
+      console.log(result)
+      res.status(200).json({msg: "Found!", data: result});
+    })
+  },
+
+  getPerDay: function(req, res, next) {
+    getDataPerDay(req.params.Id)
+    .then((result) => {
+      res.status(200).json({msg: "Found!", data: result});
+    })
   },
 
   getAll: function(req, res, next) {
@@ -118,8 +141,18 @@ module.exports = {
     });
   },
 
+  deleteByWalletId: function(req, res, next) {
+    const walletId = req.params.Id
+    coinModel.remove({ walletId: walletId}, function(err, movieInfo){
+      if(err)
+        res.status(400).json({ msg: "Delete failed!", data: false});
+      else {
+        res.status(200).json({ msg: "Deleted successfully!", data: true});
+      }
+    });
+  },
+
   create: async function(walletId) {
-    isCreating = true
     var coin={};
     coin.walletId=walletId;
     console.log('start axios')
@@ -146,6 +179,5 @@ module.exports = {
         console.log(error)
       }
     }
-    isCreating = false
   },
 }					

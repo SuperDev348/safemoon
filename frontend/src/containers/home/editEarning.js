@@ -13,11 +13,12 @@ import {useStyles} from "../style/material_ui_style"
 import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
-import {createWallet} from '../../api/wallet'
+import {deleteByWalletId} from '../../api/coin'
 import {useSetting} from '../../provider/setting'
 import {getCookie, setCookie} from '../../service/cookie'
 
 const EditEarning = (props) => {
+  const {refresh} = props
   const {data, status, error, run} = useAsync({
     status: 'idle',
   })
@@ -40,7 +41,7 @@ const EditEarning = (props) => {
     
   }
   const handleReset = () => {
-    
+    run(deleteByWalletId(setting.walletId))
   }
 
   useEffect(() => {
@@ -51,7 +52,8 @@ const EditEarning = (props) => {
     } else if (status === 'rejected') {
       NotificationManager.error(error, 'Error', 3000)
     } else if (status === 'resolved') {
-      
+      NotificationManager.success(data, 'Success', 3000)
+      refresh()
     }
   }, [status])
   return (

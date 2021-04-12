@@ -8,7 +8,7 @@ const slugs = [
 ]
 module.exports = {
   getMarket: async function(req, res, next) {
-    data = []
+    let data = []
     try {
       for (let slug of slugs) {
         let result = await marketModel.find({ name: slug.name })
