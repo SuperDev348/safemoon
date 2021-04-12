@@ -40,7 +40,6 @@ export const useStyles = makeStyles((theme) => ({
     height: 400
   },
   price: {
-    height: 150,
     fontSize: 20
   },
   twitter: {

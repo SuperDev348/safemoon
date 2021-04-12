@@ -35,8 +35,13 @@ module.exports = {
       price.max = result.data.market_data.high_24h.usd
       price.min = result.data.market_data.low_24h.usd
       price.volume = result.data.market_data.total_volume.usd
-      console.log(price)
-      priceModel.create(price, function (err, result) {
+      price.ath = result.data.market_data.ath.usd
+      price.ath_percentage = result.data.market_data.ath_change_percentage.usd
+      price.ath_date = result.data.market_data.ath_date.usd
+      price.atl = result.data.market_data.atl.usd
+      price.atl_percentage = result.data.market_data.atl_change_percentage.usd
+      price.atl_date = result.data.market_data.atl_date.usd
+      priceModel.create(price, function (err, res) {
         if (err) {
           console.log(err)
         }

@@ -20,15 +20,9 @@ function Home() {
       <Container maxWidth="lg">
         <Grid container spacing={3} style={{paddingTop: 100}}>
           <Grid item xs={12}>
-            <Grid 
-              className={`${classes.panel} ${classes.price}`}
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-            >
+            <div className={`${classes.panel} ${classes.price}`}>
               <PriceInfo />
-            </Grid>
+            </div>
           </Grid>
           <MiddleInfo />
         </Grid>

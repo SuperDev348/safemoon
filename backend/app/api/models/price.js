@@ -18,6 +18,24 @@ const PriceSchema = new Schema({
   volume: {
     type: Number,
   },
+  ath: {
+    type: Number,
+  },
+  ath_percentage: {
+    type: Number,
+  },
+  ath_date: {
+    type: Date,
+  },
+  atl: {
+    type: Number,
+  },
+  atl_percentage: {
+    type: Number,
+  },
+  atl_date: {
+    type: Date,
+  },
   Timestamp: {
     type: Date,
     default: Date.now,
