@@ -60,11 +60,11 @@ const EarningsPerDay = (props) => {
   return (
     <Grid item lg={6} xs={12}>
       <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title} style={{paddingBottom: 20}}>
+        <div className={classes.title} style={{paddingBottom: 50}}>
           Earnings per day
         </div>
         <div style={{height: '100%', width: '100%'}}>
-          <ResponsiveContainer minHeight={100} width="100%" height="80%">
+          <ResponsiveContainer minHeight={100} width="100%" height="60%">
             <BarChart
               data={amounts}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -73,7 +73,6 @@ const EarningsPerDay = (props) => {
               <XAxis dataKey="time" />
               <YAxis />
               <Tooltip />
-              <Legend />
               <Bar dataKey="earning" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>

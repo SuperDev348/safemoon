@@ -12,6 +12,7 @@ const  PriceInfo = () => {
   const [price, setPrice] = useState(0)
   const [max, setMax] = useState(0)
   const [min, setMin] = useState(0)
+  const [volume, setVolume] = useState(0)
 
   React.useEffect(() => {
     run(fetchPrice())
@@ -24,9 +25,10 @@ const  PriceInfo = () => {
   }, [run])
   React.useEffect(() => {
     if (status === 'resolved') {
-      setPrice(data?.current?.price)
-      setMax(data?.max?.price)
-      setMin(data?.min?.price)
+      setPrice(data?.price)
+      setMax(data?.max)
+      setMin(data?.min)
+      setVolume(data?.volume)
       dispatch({type: 'SET', settingName: 'price', settingData: data?.current?.price})
     }
   }, [status])
@@ -35,8 +37,9 @@ const  PriceInfo = () => {
     return (
       <div>
         <div>Current price: ${price.toFixed(10)}</div>
-        <div>Max price today: ${max.toFixed(10)}</div>
-        <div>Min price today: ${min.toFixed(10)}</div>
+        <div>24 hour high: ${max.toFixed(10)}</div>
+        <div>24 hour low: ${min.toFixed(10)}</div>
+        <div>total volume: ${volume}</div>
       </div>
     )
   } else if (status === 'pending') {
@@ -46,8 +49,9 @@ const  PriceInfo = () => {
       return (
       <div>
         <div>Current price: ${price.toFixed(10)}</div>
-        <div>Max price today: ${max.toFixed(10)}</div>
-        <div>Min price today: ${min.toFixed(10)}</div>
+        <div>24 hour high: ${max.toFixed(10)}</div>
+        <div>24 hour low: ${min.toFixed(10)}</div>
+        <div>total volume: ${volume}</div>
       </div>
     )
   } else if (status === 'rejected') {
@@ -56,8 +60,9 @@ const  PriceInfo = () => {
     return (
       <div>
         <div>Current price: ${price.toFixed(10)}</div>
-        <div>Max price today: ${max.toFixed(10)}</div>
-        <div>Min price today: ${min.toFixed(10)}</div>
+        <div>24 hour high: ${max.toFixed(10)}</div>
+        <div>24 hour low: ${min.toFixed(10)}</div>
+        <div>total volume: ${volume}</div>
       </div>
     )
   }

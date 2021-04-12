@@ -16,22 +16,7 @@ module.exports = {
       if (result.length === 0)
         res.status(400).json({ msg: "Not found" });
       else {
-        const currentPrice = result[0];
-        let maxValue = currentPrice.price;
-        let minValue = currentPrice.price;
-        let maxPrice = result[0];
-        let minPrice = result[0];
-        for (let item of result) {
-          if (item.price > maxValue) {
-            maxPrice = item;
-            maxValue = item.price;
-          }
-          if (item.price < minValue) {
-            minPrice = item;
-            minValue = item.price;
-          }
-        }
-        res.status(200).json({msg: "Found!", data: {current: currentPrice, max: maxPrice, min: minPrice}});
+        res.status(200).json({msg: "Found!", data: result[0]});
       }
     })
     .catch(error =>  {
@@ -44,9 +29,13 @@ module.exports = {
       }),
       )
     .then((result) => {
-      // console.log(result.data.tickers)
+      // console.log(result.data.market_data)
       let price={};
-      price.price=result.data.market_data.current_price.usd;
+      price.price = result.data.market_data.current_price.usd;
+      price.max = result.data.market_data.high_24h.usd
+      price.min = result.data.market_data.low_24h.usd
+      price.volume = result.data.market_data.total_volume.usd
+      console.log(price)
       priceModel.create(price, function (err, result) {
         if (err) {
           console.log(err)

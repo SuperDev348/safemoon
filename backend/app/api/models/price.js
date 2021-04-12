@@ -9,6 +9,15 @@ const PriceSchema = new Schema({
   price: {
     type: Number,
   },
+  max: {
+    type: Number,
+  },
+  min: {
+    type: Number,
+  },
+  volume: {
+    type: Number,
+  },
   Timestamp: {
     type: Date,
     default: Date.now,

@@ -33,7 +33,7 @@ function Home() {
           <MiddleInfo />
         </Grid>
         <div 
-          style={{ fontSize: 20, textAlign: 'center', padding: 30, color: '#3f51b5'}}
+          style={{ fontSize: 20, textAlign: 'center', padding: 30, color: '#3f51b5', wordWrap: 'break-word'}}
         >
           Buy me a cup of coffee send some safemoon to 0x6159A1544461d7629868950Ba5dd97A84667501c
         </div>
