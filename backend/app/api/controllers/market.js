@@ -2,9 +2,9 @@ const axios = require('axios');
 const marketModel = require('../models/market');	
 
 const slugs = [
-  {label: 'Pancake Swap', name: 'pancakeswap', id: 7186},
-  {label: 'BitMart Token', name: 'bitmart-token', id: 2933},
-  {label: 'BitWhite', name: 'bitwhite', id: 2489},
+  {label: 'Pancake Swap', name: 'pancakeswap', id: 1},
+  {label: 'BitMart Token', name: 'bitmart-token', id: 3},
+  {label: 'WhiteBit', name: 'whitebit', id: 0},
 ]
 module.exports = {
   getMarket: async function(req, res, next) {
@@ -24,17 +24,12 @@ module.exports = {
     }
   },
   create: function() {
-    for (let slug of slugs) {
-      axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?'+ new URLSearchParams({
-        id: slug.id,
-        }),
-        {headers: {
-          'X-CMC_PRO_API_KEY': 'd2a7a936-e772-45b2-91f1-786577bd0240',
-        }},
-      )
-      .then((result) => {
+    axios.get('https://api.coingecko.com/api/v3/coins/safemoon?tickers=true'+ new URLSearchParams({
+      }))
+    .then((result) => {
+      slugs.forEach((slug) => {
         let market = {};
-        market.price = result.data.data[slug.id].quote.USD.price;
+        market.price = result.data.tickers[slug.id].converted_last.usd;
         market.name = slug.name
         marketModel.create(market, function (err, result) {
           if (err) {
@@ -44,11 +39,9 @@ module.exports = {
             console.log(`success price of ${slug.name} : ${market.price}`)
           }
         });
+      })
       }).catch((err) => {
         console.log('price api error')
       });
-    }
-    
-    
   },
 }					

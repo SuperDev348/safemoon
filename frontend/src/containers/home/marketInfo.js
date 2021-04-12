@@ -42,7 +42,7 @@ const MarketInfo = (props) => {
         {
           market.map((item, index) => {
             return (
-              <div className={classes.walletItem} key={index}>{item?.label} - $ {item?.price?.price}</div>
+              <div className={classes.walletItem} key={index}>{item?.label} - $ {item?.price?.price.toFixed(10)}</div>
             )
           })
         }

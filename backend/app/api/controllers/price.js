@@ -40,16 +40,13 @@ module.exports = {
   },
   create: function() {
     const id = 8757
-    axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?'+ new URLSearchParams({
-        id: id,
+    axios.get('https://api.coingecko.com/api/v3/coins/safemoon?tickers=true'+ new URLSearchParams({
       }),
-      {headers: {
-        'X-CMC_PRO_API_KEY': 'd2a7a936-e772-45b2-91f1-786577bd0240',
-      }},
       )
     .then((result) => {
+      // console.log(result.data.tickers)
       let price={};
-      price.price=result.data.data[id].quote.USD.price;
+      price.price=result.data.market_data.current_price.usd;
       priceModel.create(price, function (err, result) {
         if (err) {
           console.log(err)

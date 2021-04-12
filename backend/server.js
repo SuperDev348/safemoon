@@ -14,26 +14,6 @@ const mongoose = require('./config/database'); //database configuration
 const { authenticate, authError } = require('./app/middleware');
 const Config= require('./config/config');
 const { port, secretKey } = Config;
-// store price every 30s
-const priceController = require('./app/api/controllers/price');
-setInterval(function () {
-  priceController.create()
-}, 3 * 60000)
-// store market price every 30s
-const marketController = require('./app/api/controllers/market');
-setInterval(function () {
-  marketController.create()
-}, 3 * 60000)
-const walletController = require('./app/api/controllers/wallet');
-const coinController = require('./app/api/controllers/coin');
-// const wallets = walletController.getAll()
-setInterval(function () {
-  walletController.getAll().then((wallets) => {
-    for (let wallet of wallets) {
-      coinController.create(wallet.walletId)
-    }
-  })
-}, 15 * 60000)
 
 const app = express();
 
@@ -75,3 +55,25 @@ app.use(function(err, req, res, next) {
 app.listen(port, function(){
 	console.log('server listening on port ',port);
 });
+
+// store price every 30s
+const priceController = require('./app/api/controllers/price');
+setInterval(function () {
+  priceController.create()
+}, 30000)
+// store market price every 30s
+const marketController = require('./app/api/controllers/market');
+setInterval(function () {
+  marketController.create()
+}, 30000)
+const walletController = require('./app/api/controllers/wallet');
+const coinController = require('./app/api/controllers/coin');
+// const wallets = walletController.getAll()
+setInterval(function () {
+  walletController.getAll().then(async(wallets) => {
+    for (let wallet of wallets) {
+      await coinController.create(wallet.walletId)
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  })
+}, 15 * 60000)
