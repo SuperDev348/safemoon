@@ -9,7 +9,7 @@ import {useStyles} from '../style/material_ui_style'
 import {useSetting} from '../../provider/setting'
 import PriceInfo from './priceInfo'
 import MiddleInfo from './middleInfo'
-// import '../style/style.css'
+import PriceHistory from './priceHistory'
 
 function Home() {
   const [setting] = useSetting()
@@ -26,6 +26,7 @@ function Home() {
         AD
       </div>
       <div className="content">
+        <PriceHistory />
         <PriceInfo />
         <MiddleInfo />
         <div 
