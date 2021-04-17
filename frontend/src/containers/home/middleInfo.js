@@ -13,6 +13,7 @@ import WalletInfo from './walletInfo'
 import MarketInfo from './marketInfo'
 import EditEarning from './editEarning'
 import EarningsPerDay from './earningsPerDay'
+import PriceHistory from './priceHistory'
 
 const MiddleInfo = () => {
   const {data, status, error, run} = useAsync({
@@ -113,6 +114,10 @@ const MiddleInfo = () => {
         <EarningsPerDay />
         {/* info */}
         <MarketInfo />
+      </div>
+      <div className="row">
+        {/* chart */}
+        <PriceHistory />
       </div>
       <div className="row">
         {/* earnings */}
