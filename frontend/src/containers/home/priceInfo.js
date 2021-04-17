@@ -42,65 +42,40 @@ const Price = (props) => {
   const {data} = props
 
   return (
-    <Grid
-      container
-      direction="row"
-    >
-      <Grid item lg={6} xs={12}>
-        <div style={{textAlign: 'center'}}>Current price: ${data?.price?.toFixed(10)}</div>
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <div style={{textAlign: 'center'}}>total volume: ${data?.volume}</div>
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <div style={{textAlign: 'center'}}>24 hour high: ${data?.max?.toFixed(10)}</div>
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <div style={{textAlign: 'center'}}>24 hour low: ${data?.min?.toFixed(10)}</div>
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item>
-            All time high:
-          </Grid>
-          <Grid item style={{paddingLeft: 5}}>
-            <div>
-              <span>${data?.ath?.toFixed(10)}</span>
-              <span style={{color: 'red'}}>{data?.ath_percentage?.toFixed(1)}%</span>
+    <div className="row" style={{maxHeight: 120, resize: 'none'}}>
+      {/* general info */}
+      <div className="widget" id="general">
+        <div id="general1">
+          <div className="widgettitle">
+            <a><b>
+                Current price: ${data?.price?.toFixed(10)}
+            </b></a>
+          </div>
+          <div className="widgetelement">
+            24h high: ${data?.max?.toFixed(10)}
+          </div>
+          <div className="widgetelement">
+            All time high: ${data?.ath?.toFixed(10)} ({data?.ath_percentage?.toFixed(1)}%) {`${formatYmd(data?.ath_date)}(${difDate(data?.ath_date)})`}
+          </div>
+        </div>
+        <div id="general2">
+          <div className="widgettitle">
+            <a><b>
+              Total volume: ${data?.volume}
+            </b></a>
+            <div className="dropdown">
+              <img src="images/dropdown.svg" />
             </div>
-            <div style={{color: '#3f51b5', fontSize: 18}}>
-              {`${formatYmd(data?.ath_date)}(${difDate(data?.ath_date)})`}
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item>
-            All time low:
-          </Grid>
-          <Grid item style={{paddingLeft: 5}}>
-            <div>
-              <span>${data?.atl?.toFixed(10)}</span>
-              <span style={{color: 'red'}}>{data?.atl_percentage?.toFixed(1)}%</span>
-            </div>
-            <div style={{color: '#3f51b5', fontSize: 18}}>
-              {`${formatYmd(data?.atl_date)}(${difDate(data?.atl_date)})`}
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+          </div>
+          <div className="widgetelement">
+            24 hour low: ${data?.min?.toFixed(10)}
+          </div>
+          <div className="widgetelement">
+            All time low: ${data?.atl?.toFixed(10)} ({data?.atl_percentage?.toFixed(1)}%) {`${formatYmd(data?.atl_date)}(${difDate(data?.atl_date)})`}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

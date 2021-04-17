@@ -9,6 +9,7 @@ import {useStyles} from '../style/material_ui_style'
 import {useSetting} from '../../provider/setting'
 import PriceInfo from './priceInfo'
 import MiddleInfo from './middleInfo'
+// import '../style/style.css'
 
 function Home() {
   const [setting] = useSetting()
@@ -17,21 +18,22 @@ function Home() {
   return (
     <div>
       <Nav />
-      <Container maxWidth="lg">
-        <Grid container spacing={3} style={{paddingTop: 100}}>
-          <Grid item xs={12}>
-            <div className={`${classes.panel} ${classes.price}`}>
-              <PriceInfo />
-            </div>
-          </Grid>
-          <MiddleInfo />
-        </Grid>
+      {/* ads */}
+      <div className="ad" style={{left: 15}}>
+        AD
+      </div>
+      <div className="ad" style={{right: 15}}>
+        AD
+      </div>
+      <div className="content">
+        <PriceInfo />
+        <MiddleInfo />
         <div 
-          style={{ fontSize: 20, textAlign: 'center', padding: 30, color: '#3f51b5', wordWrap: 'break-word'}}
+          style={{ fontSize: 20, textAlign: 'center', padding: 30, color: '#64a0aa', wordWrap: 'break-word'}}
         >
           Buy me a cup of coffee send some safemoon to 0x6159A1544461d7629868950Ba5dd97A84667501c
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

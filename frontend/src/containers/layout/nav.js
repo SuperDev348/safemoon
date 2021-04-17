@@ -14,18 +14,12 @@ import {useStyles} from '../style/material_ui_style'
 function Nav() {
   const classes = useStyles()
   
-
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar variant="dense">
-          <IconButton className={classes.button} edge="start" color="inherit" aria-label="menu">
-            <Menu />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" color="inherit">
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <div class="navbar">
+      <img src="images/logo.svg" id="logo" />
+      <a>MOON</a>
+      <b>TRACKER</b>
+      <img src="images/settings.svg" id="settings" />
     </div>
   )
 }

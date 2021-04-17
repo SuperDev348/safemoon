@@ -1,0 +1,252 @@
+:root {
+    --darkbg: #171A1D;
+    --lightbg: #1F232B;
+    --obj: #292E38;
+    --darkobj: #242932;
+    --aqua: #64A0AA;
+    --red: #FF5064;
+    --green: #0EDFA7;
+}
+img {
+    -webkit-user-drag: none;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+body {
+    background-color: var(--lightbg);
+    margin: 0;
+    font-family: Serene;
+    color: white;
+    letter-spacing: 0.5px;
+    user-select: none;
+    /*    overflow: hidden;*/
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: var(--darkbg);
+    width: 100%;
+    height: 45px;
+    vertical-align: auto;
+    line-height: 45px;
+    font-size: 18px;
+}
+    .navbar>a {
+        position: absolute;
+        left: 70px;
+        opacity: 90%;
+        font-size: 15px;
+
+    }
+    .navbar>b {
+        position: absolute;
+        left: 120px;
+        font-size: 15px;
+        color: var(--aqua);
+        
+    }
+#logo {
+    position: absolute;
+    left: 25px;
+    top: 11.5px;
+    width: 23px;
+}
+#settings {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    width: 16px;
+    cursor: pointer;
+}
+
+/* CONTENT */
+
+    .ad {
+        position: absolute;
+        height: 180%;
+        width: calc(15% - 30px);
+        background-color: yellow;
+        margin-top: 15px;
+        /**/
+        text-align: center;
+        vertical-align: auto;
+        line-height: 500px;
+        opacity: 0.5;
+    }
+
+.content {
+    position: absolute;
+    width: calc(70% + 15px);
+    margin-left: calc(15% - 15px);
+}
+    .widget {
+        background-color: var(--obj);
+        margin-left: 15px;
+        height: 100%;
+        box-shadow: 7px 7px 10px 0px rgba(0, 0, 0, 0.075);
+        }
+        .widgettitle{
+            width: 100%;
+            height: 45px;
+            background-color: var(--obj);
+            vertical-align: auto;
+            line-height: 45px;
+            box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.075);
+            font-size: 15px;
+        }
+        .widgettitle>a {
+            color: var(--aqua);
+            margin-left: 15px;
+            letter-spacing: 1.5px;
+        }
+            .dropdown {
+                float: right;
+                width: 12.5px;
+                margin-right: 15px;
+                cursor: pointer;
+                transition: 0.25s;
+            }
+                .dropdown:hover {
+                    filter: brightness(80%);
+                }
+            .titlesettings {
+                float: right;
+                background-color: var(--lightbg);
+                opacity: 0.5;
+                padding: 0 10px;
+                height: 25px;
+                margin-top: 10px;
+                margin-right: 10px;
+                border-radius: 5px;
+                text-align: center;
+                vertical-align: auto;
+                line-height: 25px;
+                font-size: 12px;
+                cursor: pointer;
+                transition: 0.25s;
+            }
+                .titlesettings:hover {
+                    opacity: 0.75;
+                }
+        .widgetcontent {
+            width: 100%;
+            height: calc(100% - 50px);
+        }
+        .widgetcontent2{
+            width: calc(100% - 10px);
+            height: calc(100% - 5px);
+            margin-left: 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+            background-color: rgba(31, 35, 43, 0.5);
+        }
+            .widgetelement {
+                width: 100%;
+                height: 45px;
+                vertical-align: auto;
+                line-height: 45px;
+                transition: .25s;
+                font-size: 15px;
+            }
+            .widgetelement:hover {background-color: var(--darkobj);}
+            .widgetelement:hover>.widgettext2,
+            .widgetelement:hover>.widgettext1 {opacity: 1;}
+                
+                .widgettext1 {
+                    float: left;
+                    margin-left: 15px;
+                    opacity: 0.9;
+                    transition: 0.25s;
+                }
+                .widgettext2 {
+                    float: right;
+                    margin-right: 15px;
+                    opacity: 0.5;
+                    transition: 0.25s;
+                }
+                .widgettext2:hover {
+                    opacity: 1;
+                }
+        .row {
+            height: 400px;
+            min-height: 45px;
+            max-height: 400px;
+            margin-top: 15px;
+            resize: vertical;
+            overflow: hidden;
+        }   
+            #general {
+
+            }
+                #general1 {
+                    float: left;
+                    width: 50%;
+                    height: 100%;
+                }
+                #general2 {
+                    float: right;
+                    width: 50%;
+                    height: 100%;
+                }
+                #general>div>.widgettitle {
+                    height: 45px;
+                    line-height: 45px;
+                }
+                #general>div>div {
+                    text-align: center;
+                    box-shadow: none;
+                    height: 35px;
+                    line-height: 35px;
+                }
+                #general>div>.widgetelement {
+                    opacity: 0.9;
+                }
+                    #general>div>.widgetelement:hover {
+                        opacity: 1;
+                    }
+            #chart {
+                
+                width: calc(70% - 15px);
+                float: left;
+            }
+            #info {
+                width: calc(30% - 15px);
+                min-width: 150px;
+                float: left;
+            }
+                #info>.widgetcontent {
+                overflow-y: scroll;
+                }
+            #earnings {
+                width: calc(50% - 15px);
+                float: left;
+            }   
+                #earnings>.widgetcontent {
+                    overflow-y: scroll;
+                    }
+                .earningsstatus {
+                    height: 45px;
+                    width: 20px;
+                    float: left;
+                }
+                .earningsstatus>img {
+                    width: 7.5px;
+                    margin-top: 18.75px;
+                    float: right;
+                }
+                #earnings>.widgetelement:hover>.widgettext2,
+                #earnings>.widgetelement:hover>.widgettext1 {
+                    opacity: 1;
+                    color: var(--red);
+                }
+            #wallet {
+                width: calc(50% - 15px);
+                float: left;
+            }
+                #wallet>.widgetcontent {
+                    overflow-y: scroll;
+                    }
+

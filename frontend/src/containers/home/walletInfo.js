@@ -51,7 +51,7 @@ const WalletInfo = (props) => {
   }, [status])
   return (
     <>
-      <Button className={classes.button} variant="outlined" onClick={handleClickOpen}>Enter Wallet Info</Button>
+      <span onClick={handleClickOpen}>Enter Wallet Info</span>
       <Dialog 
         disableBackdropClick
         disableEscapeKeyDown

@@ -58,27 +58,41 @@ const EarningsPerDay = (props) => {
     }
   }, [status])
   return (
-    <Grid item lg={6} xs={12}>
-      <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title} style={{paddingBottom: 50}}>
-          Earnings per day
+    <div className="widget" id="chart">
+      <div className="widgettitle">
+        <a><b>CHART</b></a>
+        <div className="titlesettings">
+          {/*  value / profit */}
+          value
         </div>
-        <div style={{height: '100%', width: '100%'}}>
-          <ResponsiveContainer minHeight={100} width="100%" height="60%">
-            <BarChart
-              data={amounts}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="earning" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="titlesettings">
+          30m
+          {/* dropdown appears when clicked */}
+        </div>
+        <div className="titlesettings">
+          USD
         </div>
       </div>
-    </Grid>
+      <div className="widgetcontent">
+        <div className="widgetcontent2">
+          {/* chart here */}
+          <div style={{height: '100%', width: '100%'}}>
+            <ResponsiveContainer minHeight={100} width="100%" height="100%">
+              <BarChart
+                data={amounts}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <Tooltip cursor={{fill: '#292E38'}} />
+                <Bar dataKey="earning" fill="#64a0aa" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

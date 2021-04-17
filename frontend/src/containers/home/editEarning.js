@@ -58,15 +58,7 @@ const EditEarning = (props) => {
   }, [status])
   return (
     <>
-      <Grid 
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        style={{paddingTop: 30}}
-      >
-        <Button className={classes.button} variant="outlined" onClick={handleClickOpen}>Edit Earning</Button>
-      </Grid>
+      <span onClick={handleClickOpen}>Edit Earning</span>
       <Dialog 
         disableBackdropClick
         disableEscapeKeyDown

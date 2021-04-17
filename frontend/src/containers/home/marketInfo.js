@@ -34,33 +34,30 @@ const MarketInfo = (props) => {
     }
   }, [status])
   return (
-    <Grid item lg={6} xs={12}>
-      <div className={`${classes.panel} ${classes.middle}`}>
-        <div className={classes.title} style={{paddingBottom: 30}}>
-          Market
+    <div className="widget" id="info">
+      <div className="widgettitle">
+        <a><b>INFO</b></a>
+        <div className="dropdown">
+          <img src="images/dropdown.svg" />
         </div>
+      </div>
+      <div className="widgetcontent">
         {
           market.map((item, index) => {
             return (
-              <Grid
-                container
-                className={classes.marketItem}
-                direction="row"
-                justify="space-between"
-                key={index}
-              >
-                <Grid item>
-                    {item?.label}
-                </Grid>
-                <Grid item>
-                    ${item?.price?.price.toFixed(10)}
-                </Grid>
-              </Grid>
+              <div className="widgetelement" key={index}>
+                <div className="widgettext1">
+                  {item?.label}
+                </div>
+                <div className="widgettext2">
+                  ${item?.price?.price.toFixed(10)}
+                </div>
+              </div>
             )
           })
         }
       </div>
-    </Grid>
+    </div>
   )
 }
 
