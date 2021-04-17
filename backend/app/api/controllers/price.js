@@ -32,7 +32,7 @@ module.exports = {
     priceModel.find({ 
       $and: [ { Timestamp: { $gte : startTime } }, { Timestamp: { $lte : current } }] 
     })
-    .sort({Timestamp: -1})
+    .sort({Timestamp: 1})
     .exec()
     .then((result) => {
       if (result.length === 0)
