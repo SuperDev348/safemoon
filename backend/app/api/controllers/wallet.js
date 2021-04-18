@@ -13,6 +13,7 @@ module.exports = {
   create: async function(req, res, next) {
     let wallet={};
     wallet.walletId=req.body.walletId;
+    console.log(req.body)
     // check unique walletId
     const wallets = await walletModel.find().exec()
     for (let item of wallets) {

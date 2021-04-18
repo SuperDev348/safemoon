@@ -145,9 +145,9 @@ module.exports = {
     const walletId = req.params.Id
     coinModel.remove({ walletId: walletId}, function(err, movieInfo){
       if(err)
-        res.status(400).json({ msg: "Delete failed!", data: false});
+        res.status(400).json({ msg: "Reset failed!", data: false});
       else {
-        res.status(200).json({ msg: "Deleted successfully!", data: true});
+        res.status(200).json({ msg: "Reset successfully!", data: true});
       }
     });
   },
@@ -178,6 +178,49 @@ module.exports = {
       } catch(error) {
         console.log(error)
       }
+    }
+  },
+
+  buy: async function(req, res, next) {
+    const walletId = req.body.walletId;
+    const amount = req.body.amount;
+    if (walletId === undefined|| walletId === null|| walletId === '')
+      res.status(400).json({ msg: `Please set walletId`, data: false });
+    if (amount === undefined|| amount === null|| amount === '')
+      res.status(400).json({ msg: `Please set amount`, data: false });
+    try {
+      const coins = await coinModel.find({walletId: walletId});
+      for (let coin of coins) {
+        console.log(`old: ${coin.amount}, new: ${coin.amount + parseInt(amount)}`)
+        await coinModel.update(
+          { _id: coin._id },
+          { $set : { amount: coin.amount + parseInt(amount) }}  
+        )
+      }
+      res.status(200).json({ msg: `Buy ${amount} successfully!`, data: true});
+    } catch(error) {
+      res.status(400).json({ msg: `Buy ${amount} failed!`, data: false });
+    }
+  },
+
+  sell: async function(req, res, next) {
+    const walletId = req.body.walletId;
+    const amount = req.body.amount;
+    if (walletId === undefined|| walletId === null|| walletId === '')
+      res.status(400).json({ msg: `Please set walletId`, data: false });
+    if (amount === undefined|| amount === null|| amount === '')
+      res.status(400).json({ msg: `Please set amount`, data: false });
+    try {
+      const coins = await coinModel.find({walletId: walletId});
+      for (let coin of coins) {
+        await coinModel.update(
+          { _id: coin._id },
+          { $set : { amount: coin.amount - parseInt(amount) }}
+        )
+      }
+      res.status(200).json({ msg: `Sell ${amount} successfully!`, data: true});
+    } catch(error) {
+      res.status(400).json({ msg: `Sell ${amount} failed!`, data: false });
     }
   },
 }					

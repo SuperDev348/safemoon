@@ -80,7 +80,7 @@ const PriceHistory = (props) => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="time" />
                   <YAxis dataKey="price" unit="$"/>
-                  <Tooltip cursor={{fill: '#292E38'}} />
+                  <Tooltip cursor={{fill: '#292E38'}} wrapperStyle={{ color: '#64a0aa' }} />
                   <Line dataKey="price" stroke="#64a0aa" dot={false} />
                 </LineChart>
               </ResponsiveContainer>

@@ -14,6 +14,15 @@ import MarketInfo from './marketInfo'
 import EditEarning from './editEarning'
 import EarningsPerDay from './earningsPerDay'
 
+const earningTimeTexts = [
+  '15 min',
+  '30 min',
+  '1 hour',
+  '12 hour',
+  '24 hour',
+  '1 week',
+  '1 month',
+]
 const MiddleInfo = () => {
   const {data, status, error, run} = useAsync({
     status: 'idle',
@@ -130,83 +139,33 @@ const MiddleInfo = () => {
             </div>
           </div>
           <div className="widgetcontent">
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/down.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                15 min
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[0])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/up.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                30 min
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[1])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/down.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                1 hour
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[2])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/up.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                12 hour
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[3])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/up.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                24 hour
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[4])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/up.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                1 week
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[5])}
-              </div>
-            </div>
-            <div className="widgetelement">
-              <div className="earningsstatus">
-                <img src="images/up.svg" id="down" />
-              </div>
-              <div className="widgettext1">
-                1 month
-              </div>
-              <div className="widgettext2">
-                $ {displayNumber(earnings[6])}
-              </div>
-            </div>
+            {
+              earningTimeTexts.map((item, index) => (
+                <div className="widgetelement" key={index}>
+                  <div className="widgetcolumn column1">
+                    <div className="earningsstatus">
+                      { amounts[index] >= 0 ?
+                        <img src="images/up.svg" id="up" /> :
+                        <img src="images/down.svg" id="down" />
+                      }
+                    </div>
+                    <span className="text1">
+                      {item}
+                    </span>
+                  </div>
+                  <div className="widgetcolumn column2">
+                    <span>
+                      {displayNumber(amounts[index])}
+                    </span>
+                  </div>
+                  <div className="widgetcolumn column3">
+                    <span className="text3">
+                      {displayNumber(earnings[index])}$
+                    </span>
+                  </div>
+                </div>
+              ))
+            }
           </div>
         </div>
         {/* wallet (incomplete) */}
@@ -255,48 +214,7 @@ const MiddleInfo = () => {
             </div>
           </div>
         </div>
-    </div>
-      {/* <Grid item lg={6} xs={12}>
-        <div className={`${classes.panel} ${classes.middle}`}>
-          <div className={classes.title}>
-            Earnings
-          </div>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-          >
-            <Grid item>
-              <div className={classes.earningItem}>15min</div>
-              <div className={classes.earningItem}>30min</div>
-              <div className={classes.earningItem}>1h</div>
-              <div className={classes.earningItem}>12h</div>
-              <div className={classes.earningItem}>24h</div>
-              <div className={classes.earningItem}>1week</div>
-              <div className={classes.earningItem}>1month</div>
-            </Grid>
-            <Grid item>
-              <div className={classes.earningItem}>{displayNumber(amounts[0])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[1])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[2])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[3])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[4])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[5])}</div>
-              <div className={classes.earningItem}>{displayNumber(amounts[6])}</div>
-            </Grid>
-            <Grid item>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[0])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[1])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[2])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[3])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[4])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[5])}</div>
-              <div className={classes.earningItem}>$ {displayNumber(earnings[6])}</div>
-            </Grid>
-          </Grid>
-          <EditEarning refresh={refreshEarning} />
-        </div>
-      </Grid> */}
+      </div>
     </>
   )
 }

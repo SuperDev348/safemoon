@@ -94,8 +94,83 @@ function deleteByWalletId(id) {
   }
 }
 
+function buy(walletId, amount) {
+  console.log(`walletId: ${walletId}, amount: ${amount}`)
+  try {
+    return window
+      .fetch(`${siteConfig.apiUrl}/api/coin/buy/`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          walletId: walletId,
+          amount: amount
+        }),
+      })
+      .then(async response => {
+        const {data, msg} = await response.json()
+        if (response.ok) {
+          console.log(data)
+          if (data) {
+            return msg
+          } else {
+            return Promise.reject(msg)
+          }
+        } else {
+          // handle the graphql errors
+          const error = {
+            message: data?.errors?.map(e => e.message).join('\n'),
+          }
+          return Promise.reject(error)
+        }
+      })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+function sell(walletId, amount) {
+  try {
+    return window
+      .fetch(`${siteConfig.apiUrl}/api/coin/sell/`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          walletId: walletId,
+          amount: amount
+        }),
+      })
+      .then(async response => {
+        const {data, msg} = await response.json()
+        if (response.ok) {
+          console.log(data)
+          if (data) {
+            return msg
+          } else {
+            return Promise.reject(msg)
+          }
+        } else {
+          // handle the graphql errors
+          const error = {
+            message: data?.errors?.map(e => e.message).join('\n'),
+          }
+          return Promise.reject(error)
+        }
+      })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export {
   getCoinByWalletId,
   getDataPerDay,
   deleteByWalletId,
+  sell,
+  buy,
 }

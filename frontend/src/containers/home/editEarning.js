@@ -13,9 +13,10 @@ import {useStyles} from "../style/material_ui_style"
 import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
-import {deleteByWalletId} from '../../api/coin'
+import {deleteByWalletId, buy, sell} from '../../api/coin'
 import {useSetting} from '../../provider/setting'
 import {getCookie, setCookie} from '../../service/cookie'
+import {isNumeric} from '../../service/textService'
 
 const EditEarning = (props) => {
   const {refresh} = props
@@ -27,6 +28,17 @@ const EditEarning = (props) => {
   const [modalActive, setModalActive] = React.useState(false)
   const [amount, setAmount] = useState('')
 
+  const validate = () => {
+    if (amount === '') {
+      NotificationManager.warning('Please insert amount', 'Warning', 3000)
+      return false
+    }
+    if (!isNumeric(amount)) {
+      NotificationManager.warning('Please insert numeric', 'Warning', 3000)
+      return false
+    }
+    return true
+  }
   const handleClickOpen = () => {
     setAmount('')
     setModalActive(true)
@@ -35,10 +47,14 @@ const EditEarning = (props) => {
     setModalActive(false)
   }
   const handleBuy = () => {
-    
+    if (!validate())
+      return
+    run(buy(setting.walletId, amount))
   }
   const handleSell = () => {
-    
+    if (!validate())
+      return
+    run(sell(setting.walletId, amount))
   }
   const handleReset = () => {
     run(deleteByWalletId(setting.walletId))

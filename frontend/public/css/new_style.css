@@ -154,9 +154,8 @@ body {
             .widgetelement:hover {background-color: var(--darkobj);}
             .widgetelement:hover>.widgettext2,
             .widgetelement:hover>.widgettext1 {opacity: 1;}
-                
-                .widgettext1 {
-                    float: left;
+            .widgettext1 {
+                float: left;
                     margin-left: 15px;
                     opacity: 0.9;
                     transition: 0.25s;
@@ -170,6 +169,31 @@ body {
                 .widgettext2:hover {
                     opacity: 1;
                 }
+            .widgetelement:hover>.column1,
+            .widgetelement:hover>.column2,
+            .widgetelement:hover>.column3 {opacity: 1;}
+                .widgetcolumn {
+                    float: left;
+                    width: 33.33%;
+                    transition: 0.25s;
+                }
+                .column1 {
+                    opacity: 0.9;
+                }
+                    .text1 {
+                        margin-left: 15px;
+                    }
+                .column2 {
+                    opacity: 0.5;
+                    text-align: center;
+                }
+                .column3 {
+                    opacity: 0.5;
+                    text-align: right;
+                }
+                    .text3 {
+                        margin-right: 15px;
+                    }
         .row {
             height: 400px;
             min-height: 45px;
