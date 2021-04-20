@@ -65,7 +65,7 @@ const getDataPerDay = async (walletId) => {
   end.setMinutes(0);
   let timeStamps = []
   for (let i=0; i<6; i++) {
-    let item = {start: end.getTime() - (i + 1) * 24 * 60 * 60000, end: end.getTime() - i * 24 * 60 * 6000}
+    let item = {start: end.getTime() - (i + 1) * 24 * 60 * 60000, end: end.getTime() - i * 24 * 60 * 60000}
     timeStamps = [item, ...timeStamps]
   }
   timeStamps = [...timeStamps, {start: end, end: (new Date())}]
