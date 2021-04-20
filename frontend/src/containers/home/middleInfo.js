@@ -23,6 +23,8 @@ const earningTimeTexts = [
   '1 week',
   '1 month',
 ]
+const NO_EARNING = 'generating data'
+
 const MiddleInfo = () => {
   const {data, status, error, run} = useAsync({
     status: 'idle',
@@ -30,6 +32,7 @@ const MiddleInfo = () => {
   const classes = useStyles();
   const [setting, dispatch] = useSetting()
   const [amounts, setAmounts] = useState([0, 0, 0, 0, 0, 0, 0])
+  const [amountSign, setAmountSign] = useState([0, 0, 0, 0, 0, 0, 0])
   const [earnings, setEarnings] = useState([0, 0, 0, 0, 0, 0, 0])
   const [currentAmount, setCurrentAmount] = useState(0)
   const [currentValue, setCurrentValue] = useState(0)
@@ -49,12 +52,15 @@ const MiddleInfo = () => {
       setCurrentValue(parseFloat(curValue))
     const tmpAmounts = getCookie('amounts')
     const tmpEarnings = getCookie('earnings')
+    const tmpSigns = getCookie('signs')
     if (tmpAmounts != '') {
       setAmounts(JSON.parse(tmpAmounts))
       console.log(JSON.parse(tmpAmounts))
     }
     if (tmpEarnings != '')
       setEarnings(JSON.parse(tmpEarnings))
+    if (tmpSigns != '')
+      setAmountSign(JSON.parse(tmpSigns))
   }, [])
   useEffect(() => {
     if (setting.walletId != null && setting.walletId != '') {
@@ -81,23 +87,27 @@ const MiddleInfo = () => {
     } else if (status === 'resolved') {
       let tmpAmounts = [0, 0, 0, 0, 0, 0, 0]
       let tmpEarnings = [0, 0, 0, 0, 0, 0, 0]
+      let tmpSigns = [0, 0, 0, 0, 0, 0, 0]
       if (data != null && data.length != 0 && data[0] != -1) {
         data.forEach((item, index) => {
           if (index != 0) {
             if (item == -1) {
               if (index == 1) {
-                tmpAmounts[index - 1] = 0
-                tmpEarnings[index - 1] = 0
+                tmpAmounts[index - 1] = NO_EARNING
+                tmpEarnings[index - 1] = NO_EARNING
+                tmpSigns[index - 1] = 0
               }
               else {
                 tmpAmounts[index - 1] = tmpAmounts[index - 2]
                 tmpEarnings[index - 1] = tmpEarnings[index - 2]
+                tmpSigns[index - 1] = tmpSigns[index - 2]
               }
             }
             else {
               let tmp = data[0] - item
-              tmpAmounts[index - 1] = tmp
-              tmpEarnings[index - 1] = tmp * setting?.price
+              tmpAmounts[index - 1] = displayNumber(tmp)
+              tmpEarnings[index - 1] = `${displayNumber(tmp * setting?.price)}$`
+              tmpSigns[index - 1] = tmp
             }
           }
         })
@@ -109,8 +119,10 @@ const MiddleInfo = () => {
         //--set Wallet values
         setCookie('amounts', JSON.stringify(tmpAmounts), 10)
         setCookie('earnings', JSON.stringify(tmpEarnings), 10)
+        setCookie('signs', JSON.stringify(tmpSigns), 10)
         setAmounts(tmpAmounts)
         setEarnings(tmpEarnings)
+        setAmountSign(tmpSigns)
       }
     }
   }, [status])
@@ -144,7 +156,7 @@ const MiddleInfo = () => {
                 <div className="widgetelement" key={index}>
                   <div className="widgetcolumn column1">
                     <div className="earningsstatus">
-                      { amounts[index] >= 0 ?
+                      { amountSign[index] >= 0 ?
                         <img src="images/up.svg" id="up" /> :
                         <img src="images/down.svg" id="down" />
                       }
@@ -155,12 +167,12 @@ const MiddleInfo = () => {
                   </div>
                   <div className="widgetcolumn column2">
                     <span>
-                      {displayNumber(amounts[index])}
+                      {amounts[index]}
                     </span>
                   </div>
                   <div className="widgetcolumn column3">
                     <span className="text3">
-                      {displayNumber(earnings[index])}$
+                      {earnings[index]}
                     </span>
                   </div>
                 </div>
@@ -211,6 +223,8 @@ const MiddleInfo = () => {
           <div className="widgetcontent">
             <div className="widgetcontent2">
                 {/* twitter feed here */}
+                <a class="twitter-timeline" href="https://twitter.com/safemoon?ref_src=twsrc%5Etfw">Tweets by safemoon</a> 
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>
         </div>

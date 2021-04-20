@@ -20,10 +20,10 @@ function Home() {
       <Nav />
       {/* ads */}
       <div className="ad" style={{left: 15}}>
-        AD
+        <script data-cfasync='false' type='text/javascript' src='//'></script>
       </div>
       <div className="ad" style={{right: 15}}>
-        AD
+        <script data-cfasync='false' type='text/javascript' src='//'></script>
       </div>
       <div className="content">
         <PriceHistory />
