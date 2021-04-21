@@ -25,6 +25,10 @@ body {
     /*    overflow: hidden;*/
 }
 
+iframe {
+    max-width: 100% !important;
+}
+
 /* NAVBAR */
 .navbar {
     background-color: var(--darkbg);
@@ -66,8 +70,8 @@ body {
 
     .ad {
         position: absolute;
-        height: 180%;
-        width: calc(15% - 30px);
+        height: 1780px;
+        width: 120px;
         background-color: yellow;
         margin-top: 15px;
         /**/
@@ -79,8 +83,8 @@ body {
 
 .content {
     position: absolute;
-    width: calc(70% + 15px);
-    margin-left: calc(15% - 15px);
+    width: calc(100% - 255px);
+    margin-left: calc(120px);
 }
     .widget {
         background-color: var(--obj);
@@ -194,6 +198,21 @@ body {
                     .text3 {
                         margin-right: 15px;
                     }
+        .ebay {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+        }
+        .twitter {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            height: 400px;
+            overflow: scroll;
+            padding-left: calc((100% - 1200px)/2);
+        }
         .row {
             height: 400px;
             min-height: 45px;

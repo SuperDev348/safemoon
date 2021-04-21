@@ -211,7 +211,7 @@ const MiddleInfo = () => {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="" style={{marginTop: 15}}>
         {/* twitter */}
         <div className="widget" id="twitter">
           <div className="widgettitle">
@@ -223,9 +223,25 @@ const MiddleInfo = () => {
           <div className="widgetcontent">
             <div className="widgetcontent2">
                 {/* twitter feed here */}
-                <a class="twitter-timeline" href="https://twitter.com/safemoon?ref_src=twsrc%5Etfw">Tweets by safemoon</a> 
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <div className="twitter">
+                  <a className="twitter-timeline" href="https://twitter.com/safemoon?ref_src=twsrc%5Etfw">Tweets by safemoon</a>
+                </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="" style={{marginTop: 15}}>
+        {/* ebay */}
+        <div className="widget" id="ebay">
+          <div className="widgettitle">
+            <a><b>SPONSORS</b></a>
+            <div className="dropdown">
+              <img src="images/dropdown.svg" />
+            </div>
+          </div>
+          <div className="widgetcontent">
+            <ins className="epn-placement ebay" data-config-id="607e23854b56fae25059f8fc">
+            </ins>
           </div>
         </div>
       </div>

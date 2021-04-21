@@ -19,11 +19,11 @@ function Home() {
     <div>
       <Nav />
       {/* ads */}
-      <div className="ad" style={{left: 15}}>
-        <script data-cfasync='false' type='text/javascript' src='//'></script>
+      <div className="ad" style={{left: 0}}>
+      
       </div>
-      <div className="ad" style={{right: 15}}>
-        <script data-cfasync='false' type='text/javascript' src='//'></script>
+      <div className="ad" style={{right: 0}}>
+        
       </div>
       <div className="content">
         <PriceHistory />
