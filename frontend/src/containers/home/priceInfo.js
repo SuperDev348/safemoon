@@ -42,7 +42,7 @@ const Price = (props) => {
   const {data} = props
 
   return (
-    <div className="row" style={{maxHeight: 120, resize: 'none'}}>
+    <div className="row" style={{maxHeight: 160, resize: 'none'}}>
       {/* general info */}
       <div className="widget" id="general">
         <div id="general1">

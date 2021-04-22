@@ -45,8 +45,8 @@ const MarketInfo = (props) => {
         {
           market.map((item, index) => {
             return (
-              <div className="widgetelement" key={index}>
-                <div className="widgettext1">
+              <div className="widgetelement" key={index} style={{padding: '10px 0', lineHeight: '20px'}}>
+                <div className="widgettext1" style={{width: '20%'}}>
                   {item?.label}
                 </div>
                 <div className="widgettext2">
