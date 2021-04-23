@@ -2,12 +2,19 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 // const session = require('express-session')
+const cron = require('./app/cron')
 const auth=require('./routes/auth');
-const coin = require('./routes/coin');
 const users = require('./routes/users');
-const price = require('./routes/price');
-const wallet = require('./routes/wallet');
-const market = require('./routes/market');
+// safemoon
+const coin = require('./routes/safemoon/coin');
+const wallet = require('./routes/safemoon/wallet');
+const price = require('./routes/safemoon/price');
+const market = require('./routes/safemoon/market');
+// hoge
+const hoge_coin = require('./routes/hoge/coin');
+const hoge_wallet = require('./routes/hoge/wallet');
+const hoge_price = require('./routes/hoge/price');
+const hoge_market = require('./routes/hoge/market');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -39,9 +46,13 @@ app.use('/api/auth', auth);
 //app.use('/api', [authenticate, authError]);
 app.use('/api/users',[authenticate, authError], users);
 app.use('/api/coin', coin);
-app.use('/api/price', price);
 app.use('/api/wallet', wallet);
+app.use('/api/price', price);
 app.use('/api/market', market);
+app.use('/api/hoge/coin', hoge_coin);
+app.use('/api/hoge/wallet', hoge_wallet);
+app.use('/api/hoge/price', hoge_price);
+app.use('/api/hoge/market', hoge_market);
 // handle errors
 app.use(function(err, req, res, next) {
 	console.log(err);
@@ -56,24 +67,5 @@ app.listen(port, function(){
 	console.log('server listening on port ',port);
 });
 
-// store price every 30s
-const priceController = require('./app/api/controllers/price');
-setInterval(function () {
-  priceController.create()
-}, 30000)
-// store market price every 30s
-const marketController = require('./app/api/controllers/market');
-setInterval(function () {
-  marketController.create()
-}, 30000)
-const walletController = require('./app/api/controllers/wallet');
-const coinController = require('./app/api/controllers/coin');
-// const wallets = walletController.getAll()
-setInterval(function () {
-  walletController.getAll().then(async(wallets) => {
-    for (let wallet of wallets) {
-      await coinController.create(wallet.walletId)
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
-  })
-}, 15 * 60000)
+cron.safemoon();
+cron.hoge();

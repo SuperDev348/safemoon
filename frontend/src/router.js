@@ -4,27 +4,25 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import {NotificationManager} from 'react-notifications'
 
-import Home from './containers/home/index'
-import {getCookie} from './service/cookie'
-import {useSetting} from './provider/setting'
+import Safemoon from './containers/safemoon/index'
+import Hoge from './containers/hoge/index'
+import {SettingProvider} from './provider/setting'
 
 export default function Routes() {
-  const [,dispatch] = useSetting()
-
-  useEffect(() => {
-    const walletId = getCookie('walletId')
-    dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
-    if (walletId === '')
-      NotificationManager.error('Enter wallet id to start using the site', 'Error', 20000)
-  }, [])
 
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <SettingProvider>
+            <Safemoon />
+          </SettingProvider>
+        </Route>
+        <Route exact path="/hoge">
+          <SettingProvider>
+            <Hoge />
+          </SettingProvider>
         </Route>
       </Switch>
     </Router>
