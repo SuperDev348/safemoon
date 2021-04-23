@@ -31,6 +31,7 @@ const MarketInfo = (props) => {
       console.log(error)
     } else if (status === 'resolved') {
       setMarket(data)
+      // console.log(data)
     }
   }, [status])
   return (
@@ -47,10 +48,10 @@ const MarketInfo = (props) => {
             return (
               <div className="widgetelement" key={index} style={{padding: '10px 0', lineHeight: '20px'}}>
                 <div className="widgettext1" style={{width: '20%'}}>
-                  {item?.label}
+                  {item?.name}
                 </div>
                 <div className="widgettext2">
-                  ${item?.price?.price.toFixed(10)}
+                  ${item?.price?.toFixed(10)}
                 </div>
               </div>
             )
