@@ -213,12 +213,6 @@ const MiddleInfo = () => {
           </div>
         </div>
       </div>
-      <div className="row">
-        {/* holder */}
-        <Holder />
-        {/* comment */}
-        <Comment />
-      </div>
       <div className="" style={{marginTop: 15}}>
         {/* twitter */}
         <div className="widget" id="twitter">

@@ -46,10 +46,10 @@ const MarketInfo = (props) => {
           market.map((item, index) => {
             return (
               <div className="widgetelement" key={index} style={{padding: '10px 0', lineHeight: '20px'}}>
-                <div className="widgettext1" style={{width: '20%'}}>
+                <div className="widgettext1">
                   {item?.name}
                 </div>
-                <div className="widgettext2">
+                <div className="info-widgettext2 widgettext2">
                   ${item?.price.toFixed(10)}
                 </div>
               </div>

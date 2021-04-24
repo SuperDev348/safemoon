@@ -52,6 +52,22 @@ iframe {
         color: var(--aqua);
         
     }
+    .menu {
+        padding-left: 250px;
+    }
+        .menu>span {
+            padding-right: 10px;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        .menu>span:hover {
+            opacity: 0.75;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+        }
+            
 #logo {
     position: absolute;
     left: 25px;
@@ -154,11 +170,12 @@ iframe {
                 line-height: 45px;
                 transition: .25s;
                 font-size: 15px;
+                position: relative;
             }
             .widgetelement:hover {background-color: var(--darkobj);}
             .widgetelement:hover>.widgettext2,
             .widgetelement:hover>.widgettext1 {opacity: 1;}
-            .widgettext1 {
+                .widgettext1 {
                 float: left;
                     margin-left: 15px;
                     opacity: 0.9;
@@ -169,6 +186,17 @@ iframe {
                     margin-right: 15px;
                     opacity: 0.5;
                     transition: 0.25s;
+                }
+                @media only screen and (max-width: 1200px) {
+                    .info-widgettext2 {
+                        position: absolute;
+                        bottom: 15px;
+                        right: 0;
+                        float: right;
+                        margin-right: 15px;
+                        opacity: 0.5;
+                        transition: 0.25s;
+                    }
                 }
                 .widgettext2:hover {
                     opacity: 1;

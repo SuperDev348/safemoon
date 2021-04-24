@@ -64,7 +64,7 @@ const WalletInfo = (props) => {
         <DialogTitle id="form-dialog-title">Settings</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            please enter wallet id and cron string in here
+            enter receive wallet id (we can not hack or steal coins from you with this address)
           </DialogContentText>
           <TextField
             autoFocus
