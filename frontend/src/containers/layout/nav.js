@@ -19,10 +19,10 @@ function Nav() {
       <a>MOON</a>
       <b>TRACKER</b>
       <div className="menu">
-        <span>
+        <span className="item">
           <Link to="/">safemoon</Link>
         </span>
-        <span>
+        <span className="item">
           <Link to="/hoge">hoge</Link>
         </span>
         {/* <span>
@@ -34,8 +34,8 @@ function Nav() {
         <span>
           <Link to="/charizoid">charizoid</Link>
         </span> */}
+        <span id="beta">In beta testing</span>
       </div>
-      {/* <img src="images/settings.svg" id="settings" /> */}
     </div>
   )
 }
