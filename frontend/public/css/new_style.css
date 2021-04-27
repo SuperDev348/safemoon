@@ -55,12 +55,12 @@ iframe {
     .menu {
         padding-left: 250px;
     }
-        .menu>span {
+        .menu>.item {
             padding-right: 20px;
             opacity: 0.5;
             cursor: pointer;
         }
-        .menu>span:hover {
+        .menu>.item:hover {
             opacity: 0.75;
         }
         .menu a {
@@ -68,6 +68,11 @@ iframe {
             text-decoration: none;
         }
             
+#beta {
+    opacity: 0.5;
+    float: right;
+    padding-right: 30px;
+}
 #logo {
     position: absolute;
     left: 25px;
