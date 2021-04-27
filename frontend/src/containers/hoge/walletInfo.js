@@ -13,7 +13,7 @@ import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
 import {createWallet} from '../../api/hoge/wallet'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/hoge'
 import {getCookie, setCookie} from '../../service/cookie'
 
 const WalletInfo = (props) => {
@@ -64,7 +64,7 @@ const WalletInfo = (props) => {
         <DialogTitle id="form-dialog-title">Settings</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            please enter wallet id and cron string in here
+            enter receive wallet id (we can not hack or steal coins from you with this address)
           </DialogContentText>
           <TextField
             autoFocus

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useMemo} from 'react'
 import {Grid} from '@material-ui/core'
 
 import {useAsync} from '../../service/utils'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {fetchPrice} from '../../api/safemoon/price'
 
 const formatYmd = (string) => {

@@ -5,7 +5,7 @@ import { Edit } from '@material-ui/icons'
 
 import {useAsync} from '../../service/utils'
 import {displayNumber} from '../../service/textService'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/hoge'
 import {getCookie, setCookie} from '../../service/cookie'
 import {getByWalletId} from '../../api/hoge/coin'
 import {useStyles} from '../style/material_ui_style'
@@ -65,6 +65,7 @@ const MiddleInfo = () => {
       setAmountSign(JSON.parse(tmpSigns))
   }, [])
   useEffect(() => {
+    console.log(setting.walletId)
     if (setting.walletId != null && setting.walletId != '') {
       run(getByWalletId(setting.walletId))
     }
@@ -87,6 +88,8 @@ const MiddleInfo = () => {
     } else if (status === 'rejected') {
       console.log(error)
     } else if (status === 'resolved') {
+      console.log('hoge amount')
+      console.log(data)
       let tmpAmounts = [0, 0, 0, 0, 0, 0, 0]
       let tmpEarnings = [0, 0, 0, 0, 0, 0, 0]
       let tmpSigns = [0, 0, 0, 0, 0, 0, 0]
@@ -213,12 +216,6 @@ const MiddleInfo = () => {
           </div>
         </div>
       </div>
-      <div className="row">
-        {/* holder */}
-        <Holder />
-        {/* comment */}
-        <Comment />
-      </div>
       <div className="" style={{marginTop: 15}}>
         {/* twitter */}
         <div className="widget" id="twitter">
@@ -232,7 +229,7 @@ const MiddleInfo = () => {
             <div className="widgetcontent2">
                 {/* twitter feed here */}
                 <div className="twitter">
-                  <a className="twitter-timeline" href="https://twitter.com/safemoon?ref_src=twsrc%5Etfw">Tweets by safemoon</a>
+                  <a class="twitter-timeline" href="https://twitter.com/HogeFinance?ref_src=twsrc%5Etfw">Tweets by HogeFinance</a>
                 </div>
             </div>
           </div>

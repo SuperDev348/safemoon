@@ -1,11 +1,6 @@
 const axios = require('axios');
 const marketModel = require('../../models/safemoon/market');	
 
-const slugs = [
-  {label: 'Pancake Swap', name: 'pancakeswap', id: 1},
-  {label: 'BitMart', name: 'bitmart-token', id: 3},
-  {label: 'WhiteBit', name: 'whitebit', id: 0},
-]
 module.exports = {
   getMarket: async function(req, res, next) {
     marketModel.find({}, function(err, result){
@@ -23,7 +18,7 @@ module.exports = {
       await marketModel.remove({});
       await  Promise.all(result.data.tickers.forEach( async (item) => {
         let market = {};
-        market.name = item.market.name;
+        market.name = `${item.market.name}(${item.target})`;
         market.price = item.converted_last.usd;
         try {
           await marketModel.create(market);

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core'
 import {NotificationManager} from 'react-notifications'
 
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {getCookie} from '../../service/cookie'
 import Nav from '../layout/nav'
 import {useStyles} from '../style/material_ui_style'

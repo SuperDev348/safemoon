@@ -13,7 +13,7 @@ import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
 import {createWallet} from '../../api/safemoon/wallet'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {getCookie, setCookie} from '../../service/cookie'
 
 const WalletInfo = (props) => {

@@ -30,6 +30,15 @@ const MarketInfo = (props) => {
     } else if (status === 'rejected') {
       console.log(error)
     } else if (status === 'resolved') {
+      data.sort((a, b) => {
+        let comparison = 0;
+        if (a.price > b.price) {
+          comparison = -1;
+        } else if (a.price < b.price) {
+          comparison = 1;
+        }
+        return comparison;
+      })
       setMarket(data)
       // console.log(data)
     }

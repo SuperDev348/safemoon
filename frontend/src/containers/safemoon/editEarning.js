@@ -14,7 +14,7 @@ import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
 import {deleteByWalletId, buy, sell} from '../../api/safemoon/coin'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {getCookie, setCookie} from '../../service/cookie'
 import {isNumeric} from '../../service/textService'
 

@@ -5,7 +5,7 @@ import { Edit } from '@material-ui/icons'
 
 import {useAsync} from '../../service/utils'
 import {displayNumber} from '../../service/textService'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {getCookie, setCookie} from '../../service/cookie'
 import {getByWalletId} from '../../api/safemoon/coin'
 import {useStyles} from '../style/material_ui_style'

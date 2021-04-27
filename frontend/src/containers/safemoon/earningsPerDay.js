@@ -13,7 +13,7 @@ import {
 
 import {useStyles} from "../style/material_ui_style"
 import {useAsync} from '../../service/utils'
-import {useSetting} from '../../provider/setting'
+import {useSetting} from '../../provider/safemoon'
 import {getCookie, setCookie} from '../../service/cookie'
 import {getDataPerDay} from '../../api/safemoon/coin'
 

@@ -25,8 +25,17 @@ function Nav() {
         <span>
           <Link to="/hoge">hoge</Link>
         </span>
+        {/* <span>
+          <Link to="/ass">ass</Link>
+        </span>
+        <span>
+          <Link to="/dragon">space dragon</Link>
+        </span>
+        <span>
+          <Link to="/charizoid">charizoid</Link>
+        </span> */}
       </div>
-      <img src="images/settings.svg" id="settings" />
+      {/* <img src="images/settings.svg" id="settings" /> */}
     </div>
   )
 }
