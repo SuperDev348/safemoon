@@ -8,7 +8,7 @@ const formatDate = date =>
 function getByWalletId(id) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/${id}`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/${id}`, {
         method: 'GET',
         headers: {
         },
@@ -37,7 +37,7 @@ function getByWalletId(id) {
 function getDataPerDay(id) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/day/${id}`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/day/${id}`, {
         method: 'GET',
         headers: {
         },
@@ -67,7 +67,7 @@ function getDataPerDay(id) {
 function deleteByWalletId(id) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/${id}`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/${id}`, {
         method: 'DELETE',
         headers: {
         },
@@ -98,7 +98,7 @@ function buy(walletId, amount) {
   console.log(`walletId: ${walletId}, amount: ${amount}`)
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/buy/`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/buy/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -134,7 +134,7 @@ function buy(walletId, amount) {
 function sell(walletId, amount) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/sell/`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/sell/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -170,7 +170,7 @@ function sell(walletId, amount) {
 function getHolderByWalletId(id) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/holder/${id}`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/holder/${id}`, {
         method: 'GET',
         headers: {
         },
@@ -199,7 +199,7 @@ function getHolderByWalletId(id) {
 function getCommentByWalletId(id) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/coin/comment/${id}`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/coin/comment/${id}`, {
         method: 'GET',
         headers: {
         },

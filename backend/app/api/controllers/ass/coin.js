@@ -31,13 +31,13 @@ const getDataByWalletId = async (walletId) => {
   const currentDate = new Date()
   // current amount
   let currentAmount = NO_DATA
-  const res = await axios.get('https://api.etherscan.io/api?'+ new URLSearchParams({
+  const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
     module: 'account',
     action: 'tokenbalance',
     tag: 'latest',
-    apikey: 'T4TZAAF5U4CXJDU2YGQZMW8GYY6KG1Z1DS',
+    apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
     address: walletId,
-    contractaddress: '0xfad45e47083e4607302aa43c65fb3106f1cd7607'
+    contractaddress: '0x7c63f96feafacd84e75a594c00fac3693386fbf0'
   }),
   {headers: {
     'User-Agent': 'HTTPBot-iOS/2021.1',
@@ -156,13 +156,13 @@ module.exports = {
     var coin={};
     coin.walletId=walletId;
     console.log('start axios')
-    const res = await axios.get('https://api.etherscan.io/api?'+ new URLSearchParams({
+    const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
         module: 'account',
         action: 'tokenbalance',
         tag: 'latest',
-        apikey: 'T4TZAAF5U4CXJDU2YGQZMW8GYY6KG1Z1DS',
-        address: coin.walletId,
-        contractaddress: '0xfad45e47083e4607302aa43c65fb3106f1cd7607'
+        apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
+        address: walletId,
+        contractaddress: '0x7c63f96feafacd84e75a594c00fac3693386fbf0'
       }),
       {headers: {
         'User-Agent': 'HTTPBot-iOS/2021.1',

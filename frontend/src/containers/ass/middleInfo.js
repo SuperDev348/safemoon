@@ -156,17 +156,26 @@ const MiddleInfo = () => {
             {
               earningTimeTexts.map((item, index) => (
                 <div className="widgetelement" key={index}>
-                  <div class="earningsstatus">
-                    { amountSign[index] >= 0 ?
-                      <img src="images/up.svg" id="up" /> :
-                      <img src="images/down.svg" id="down" />
-                    }
+                  <div className="widgetcolumn column1">
+                    <div className="earningsstatus">
+                      { amountSign[index] >= 0 ?
+                        <img src="images/up.svg" id="up" /> :
+                        <img src="images/down.svg" id="down" />
+                      }
+                    </div>
+                    <span className="text1">
+                      {item}
+                    </span>
                   </div>
-                  <div class="widgettext1">
-                    {item}
+                  <div className="widgetcolumn column2">
+                    <span>
+                      {amounts[index]}
+                    </span>
                   </div>
-                  <div class="widgettext2">
-                    {amounts[index]}
+                  <div className="widgetcolumn column3">
+                    <span className="text3">
+                      {earnings[index]}
+                    </span>
                   </div>
                 </div>
               ))

@@ -8,7 +8,7 @@ const formatDate = date =>
 function createWallet(walletId) {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/wallet/`, 
+      .fetch(`${siteConfig.apiUrl}/api/ass/wallet/`, 
       {
         method: 'POST',
         headers: {

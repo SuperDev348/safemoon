@@ -23,13 +23,13 @@ module.exports = {
       }
     }
     // check invalid walletId
-    axios.get('https://api.etherscan.io/api?'+ new URLSearchParams({
+    axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
         module: 'account',
         action: 'tokenbalance',
         tag: 'latest',
-        apikey: 'T4TZAAF5U4CXJDU2YGQZMW8GYY6KG1Z1DS',
+        apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
         address: wallet.walletId,
-        contractaddress: '0xfad45e47083e4607302aa43c65fb3106f1cd7607'
+        contractaddress: '0x7c63f96feafacd84e75a594c00fac3693386fbf0'
       }),
       {headers: {
         'User-Agent': 'HTTPBot-iOS/2021.1',
