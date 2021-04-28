@@ -15,6 +15,11 @@ const hoge_coin = require('./routes/hoge/coin');
 const hoge_wallet = require('./routes/hoge/wallet');
 const hoge_price = require('./routes/hoge/price');
 const hoge_market = require('./routes/hoge/market');
+// ass
+const ass_coin = require('./routes/ass/coin');
+const ass_wallet = require('./routes/ass/wallet');
+const ass_price = require('./routes/ass/price');
+const ass_market = require('./routes/ass/market');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -53,6 +58,10 @@ app.use('/api/hoge/coin', hoge_coin);
 app.use('/api/hoge/wallet', hoge_wallet);
 app.use('/api/hoge/price', hoge_price);
 app.use('/api/hoge/market', hoge_market);
+app.use('/api/ass/coin', ass_coin);
+app.use('/api/ass/wallet', ass_wallet);
+app.use('/api/ass/price', ass_price);
+app.use('/api/ass/market', ass_market);
 // handle errors
 app.use(function(err, req, res, next) {
 	console.log(err);
@@ -69,3 +78,4 @@ app.listen(port, function(){
 
 cron.safemoon();
 cron.hoge();
+cron.ass();

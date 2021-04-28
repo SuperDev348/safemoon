@@ -8,7 +8,7 @@ const formatDate = date =>
 function fetchMarket() {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/hoge/market`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/market`, {
         method: 'GET',
         headers: {
         },

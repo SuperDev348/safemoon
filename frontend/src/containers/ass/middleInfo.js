@@ -135,7 +135,7 @@ const MiddleInfo = () => {
         {/* chart */}
         <EarningsPerDay />
         {/* info */}
-        {/* <MarketInfo /> */}
+        <MarketInfo />
       </div>
       <div className="row">
         {/* earnings */}
@@ -193,14 +193,14 @@ const MiddleInfo = () => {
                 {displayNumber(currentAmount)}
               </div>
             </div>
-            {/* <div className="widgetelement">
+            <div className="widgetelement">
               <div className="widgettext1">
                 Total values
               </div>
               <div className="widgettext2">
                 $ {displayNumber(currentValue)}
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

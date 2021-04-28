@@ -61,8 +61,7 @@ const EarningsPerDay = (props) => {
     }
   }, [status])
   return (
-    // <div className="widget" id="chart">
-    <div className="widget">
+    <div className="widget" id="chart">
       <div className="widgettitle">
         <a><b>CHART</b></a>
         <div className="titlesettings">

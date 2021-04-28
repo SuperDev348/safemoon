@@ -35,8 +35,8 @@ function Ass() {
         
       </div>
       <div className="content">
-        {/* <PriceHistory />
-        <PriceInfo /> */}
+        <PriceHistory />
+        <PriceInfo />
         <MiddleInfo />
         <div 
           style={{ fontSize: 20, textAlign: 'center', padding: 30, color: '#64a0aa', wordWrap: 'break-word'}}

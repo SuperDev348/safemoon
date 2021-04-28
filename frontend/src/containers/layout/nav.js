@@ -25,13 +25,13 @@ function Nav() {
         <span className="item">
           <Link to="/hoge">hoge</Link>
         </span>
-        {/* <span>
+        <span className="item">
           <Link to="/ass">ass</Link>
         </span>
-        <span>
+        {/* <span className="item">
           <Link to="/dragon">space dragon</Link>
         </span>
-        <span>
+        <span className="item">
           <Link to="/charizoid">charizoid</Link>
         </span> */}
         <span id="beta">In beta testing</span>

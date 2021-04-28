@@ -8,7 +8,7 @@ const formatDate = date =>
 function fetchPrice() {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/hoge/price`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/price`, {
         method: 'GET',
         headers: {
         },
@@ -37,7 +37,7 @@ function fetchPrice() {
 function getPriceHistory() {
   try {
     return window
-      .fetch(`${siteConfig.apiUrl}/api/hoge/price/history`, {
+      .fetch(`${siteConfig.apiUrl}/api/ass/price/history`, {
         method: 'GET',
         headers: {
         },
