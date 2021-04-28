@@ -226,7 +226,7 @@ const MiddleInfo = () => {
             <div className="widgetcontent2">
                 {/* twitter feed here */}
                 <div className="twitter">
-                  <a className="twitter-timeline" href="https://twitter.com/safemoon?ref_src=twsrc%5Etfw">Tweets by safemoon</a>
+                  <a class="twitter-timeline" href="https://twitter.com/assfinance?ref_src=twsrc%5Etfw">Tweets by assfinance</a>
                 </div>
             </div>
           </div>

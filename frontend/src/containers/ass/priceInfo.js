@@ -97,6 +97,7 @@ const  PriceInfo = () => {
   }, [run])
   React.useEffect(() => {
     if (status === 'resolved') {
+      console.log(data)
       setPrice(data)
       dispatch({type: 'SET', settingName: 'price', settingData: data?.price})
     }
