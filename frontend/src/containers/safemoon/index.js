@@ -22,6 +22,14 @@ function Safemoon() {
     dispatch({type: 'SET', settingName: 'walletId', settingData: walletId})
     if (walletId === '')
       NotificationManager.error('Enter wallet id to start using the site', 'Error', 20000)
+    const scriptEbay = document.createElement("script");
+    scriptEbay.src = "https://epnt.ebay.com/static/epn-smart-tools.js";
+    scriptEbay.async = true;
+    document.body.appendChild(scriptEbay);
+    const scriptTwitter = document.createElement("script");
+    scriptTwitter.src = "https://platform.twitter.com/widgets.js";
+    scriptTwitter.async = true;
+    document.body.appendChild(scriptTwitter);
   }, [])
 
   return (
