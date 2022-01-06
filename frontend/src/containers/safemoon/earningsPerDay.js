@@ -4,18 +4,18 @@ import {
   BarChart,
   Bar,
   XAxis,
-  // YAxis,
-  // CartesianGrid,
-  // Tooltip,
-  // Legend,
-  // ResponsiveContainer
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
 } from "recharts"
 
 import {useStyles} from "../style/material_ui_style"
 import {useAsync} from '../../service/utils'
-// import {useSetting} from '../../provider/safemoon'
-// import {getCookie, setCookie} from '../../service/cookie'
-// import {getDataPerDay} from '../../api/safemoon/coin'
+import {useSetting} from '../../provider/safemoon'
+import {getCookie, setCookie} from '../../service/cookie'
+import {getDataPerDay} from '../../api/safemoon/coin'
 
 const EarningsPerDay = (props) => {
   const {data, status, error, run} = useAsync({
