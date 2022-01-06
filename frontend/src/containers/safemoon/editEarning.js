@@ -13,10 +13,10 @@ import {useStyles} from "../style/material_ui_style"
 import {NotificationManager} from 'react-notifications'
 
 import {useAsync} from '../../service/utils'
-import {deleteByWalletId, buy, sell} from '../../api/safemoon/coin'
-import {useSetting} from '../../provider/safemoon'
-import {getCookie, setCookie} from '../../service/cookie'
-import {isNumeric} from '../../service/textService'
+// import {deleteByWalletId, buy, sell} from '../../api/safemoon/coin'
+// import {useSetting} from '../../provider/safemoon'
+// import {getCookie, setCookie} from '../../service/cookie'
+// import {isNumeric} from '../../service/textService'
 
 const EditEarning = (props) => {
   const {refresh} = props
