@@ -23,7 +23,9 @@ function getByWalletId(id) {
           }
         } else {
           // handle the graphql errors
-          
+          const error = {
+            message: data?.errors?.map(e => e.message).join('\n'),
+          }
           return Promise.reject(error)
         }
       })

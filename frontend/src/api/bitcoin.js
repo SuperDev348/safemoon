@@ -30,12 +30,6 @@ function fetchBitcoine(walletId) {
         } else {
           return Promise.reject(new Error(`No data with the walletId "${walletId}"`))
         }
-      } else {
-        // handle the graphql errors
-        const error = {
-          // message: data?.errors?.map(e => e.message).join('\n'),
-        }
-        return Promise.reject(error)
       }
     })
 }
