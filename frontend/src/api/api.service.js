@@ -8,6 +8,20 @@ const ApiService = {
         // axios.defaults.baseURL = siteConfig.apiUrl;
     },
 
+    setHeader(){
+        // axios.defaults.headers.common = {
+        //     'X-Requested-With': 'XMLHttpRequest',
+        //     "Authorization":`Bearer ${JwtService.getToken()}`
+        // };
+    },
+
+    get(resource) {
+        return fetch(`${siteConfig.apiUrl}/${resource}`);
+        // return axios.get(`${siteConfig.apiUrl}/${resource}`).catch(error => {
+        //     throw new Error(`[RWV] ApiService ${error}`);
+        // });     
+    },
+
     post(resource, params) {
         return fetch(`${siteConfig.apiUrl}/${resource}`, {
             method: 'POST',
