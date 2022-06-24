@@ -13,11 +13,7 @@ function fetchBitcoine(walletId) {
         apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
         address: walletId,
         contractaddress: '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3'
-      }), {
-      method: 'GET',
-      headers: {
-        'User-Agent': 'HTTPBot-iOS/2021.1',
-      },
+      }), 
     })
     .then(async response => {
       const {result, message} = await response.json()
