@@ -16,11 +16,6 @@ function fetchMarket() {
       .then(async response => {
         const {data} = await response.json()
         if (response.ok) {
-          if (data) {
-            return data
-          } else {
-            return Promise.reject(new Error(`No data`))
-          }
         } else {
           // handle the graphql errors
           const error = {
