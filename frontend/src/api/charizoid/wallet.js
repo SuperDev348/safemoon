@@ -15,6 +15,9 @@ function createWallet(walletId) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+          walletId: walletId
+        }),
       })
       .then(async response => {
         const {data, msg, status} = await response.json()
