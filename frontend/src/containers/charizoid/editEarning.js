@@ -15,7 +15,7 @@ import {NotificationManager} from 'react-notifications'
 import {useAsync} from '../../service/utils'
 import {deleteByWalletId, buy, sell} from '../../api/charizoid/coin'
 import {useSetting} from '../../provider/setting'
-import {getCookie, setCookie} from '../../service/cookie'
+// import {getCookie, setCookie} from '../../service/cookie'
 import {isNumeric} from '../../service/textService'
 
 const EditEarning = (props) => {

@@ -7,14 +7,13 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer
 } from "recharts"
 
 import {useStyles} from "../style/material_ui_style"
 import {useAsync} from '../../service/utils'
 import {useSetting} from '../../provider/setting'
-import {getCookie, setCookie} from '../../service/cookie'
+// import {getCookie, setCookie} from '../../service/cookie'
 import {getDataPerDay} from '../../api/charizoid/coin'
 
 const EarningsPerDay = (props) => {
@@ -22,7 +21,6 @@ const EarningsPerDay = (props) => {
     status: 'idle',
   })
   const [setting] = useSetting()
-  const classes = useStyles();
   const [amounts, setAmounts] = useState([])
 
   useEffect(() => {
