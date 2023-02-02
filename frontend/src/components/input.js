@@ -4,11 +4,6 @@ export default function Input(props) {
   const {type, name, placeholder, value, onChange, error} = props;
   const [style, setStyle] = React.useState({});
 
-  React.useEffect(() => {
-    let style = {};
-    error? style.border = "red solid 1px" : style.border = "black solid 1px";
-    setStyle(style);
-  }, [error])
 
   return (
     <>
