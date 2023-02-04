@@ -11,6 +11,10 @@ import {getByWalletId} from '../../api/charizoid/coin'
 import {useStyles} from '../style/material_ui_style'
 import WalletInfo from './walletInfo'
 import MarketInfo from './marketInfo'
+import EditEarning from './editEarning'
+import EarningsPerDay from './earningsPerDay'
+import Holder from './holder'
+import Comment from './comment'
 
 const earningTimeTexts = [
   '15 min',
