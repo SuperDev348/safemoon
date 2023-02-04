@@ -3,7 +3,6 @@ import {Grid} from '@material-ui/core'
 
 import {useStyles} from "../style/material_ui_style"
 import {useAsync} from '../../service/utils'
-import {getCookie, setCookie} from '../../service/cookie'
 import {fetchMarket} from '../../api/charizoid/market'
 
 const MarketInfo = (props) => {
