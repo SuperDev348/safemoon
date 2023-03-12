@@ -43,7 +43,14 @@ const hoge = () => {
     hogeMarketController.create()
   }, 30000)
   // const wallets = walletController.getAll()
-  
+  setInterval(function () {
+    hogeWalletController.getAll().then(async(wallets) => {
+      for (let wallet of wallets) {
+        await hogeCoinController.create(wallet.walletId)
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    })
+  }, 15 * 60000)
 }
 const ass = () => {
   // store price every 30s
