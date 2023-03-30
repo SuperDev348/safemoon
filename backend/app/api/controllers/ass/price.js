@@ -2,24 +2,21 @@ const axios = require('axios');
 const priceModel = require('../../models/ass/price');	
 
 module.exports = {
-  
-  getPrices: function(req, res, next) {
+  getPrice: function(req, res, next) {
     const startTime = new Date();
-    startTime.setDate(startTime.getDate() - 7 + 1)
     startTime.setHours(0);
     startTime.setMinutes(0);
     const current = new Date();
     priceModel.find({ 
       $and: [ { Timestamp: { $gte : startTime } }, { Timestamp: { $lte : current } }] 
     })
-    .sort({Timestamp: 1})
+    .sort({Timestamp: -1})
     .exec()
     .then((result) => {
       if (result.length === 0)
         res.status(400).json({ msg: "Not found" });
       else {
-        result = result.filter((item, index) => index%120 === 0)
-        res.status(200).json({msg: "Found!", data: result});
+        res.status(200).json({msg: "Found!", data: result[0]});
       }
     })
     .catch(error =>  {
