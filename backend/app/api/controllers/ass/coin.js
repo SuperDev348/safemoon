@@ -2,7 +2,20 @@ const axios = require('axios');
 const coinModel = require('../../models/ass/coin');	
 
 const NO_DATA = -1
-
+const getDataWithTime = async (walletId, startTime, endTime) => {
+  try {
+    const result = await coinModel.find({$and: [
+        { walletId: walletId },
+        { $and: [ { Timestamp: { $gte : startTime } }, { Timestamp: { $lte : endTime } }] }
+      ]})
+    .sort({Timestamp: 1})
+    .exec()
+    return result
+  } catch (error) {
+    console.log('error')
+    return []
+  }
+}
 
 const getDataByWalletId = async (walletId) => {
   const timeStamps = 
