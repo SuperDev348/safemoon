@@ -14,6 +14,25 @@ const assWalletController = require('../api/controllers/ass/wallet');
 const assPriceController = require('../api/controllers/ass/price');
 const assMarketController = require('../api/controllers/ass/market');
 
+const safemoon = () => {
+  // store price every 30s
+  setInterval(function () {
+    priceController.create()
+  }, 30000)
+  // store market price every 30s
+  setInterval(function () {
+    marketController.create()
+  }, 30000)
+  // const wallets = walletController.getAll()
+  setInterval(function () {
+    walletController.getAll().then(async(wallets) => {
+      for (let wallet of wallets) {
+        await coinController.create(wallet.walletId)
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    })
+  }, 15 * 60000)
+}
 const hoge = () => {
   // store price every 30s
   setInterval(function () {
