@@ -23,6 +23,15 @@ const safemoon = () => {
   setInterval(function () {
     marketController.create()
   }, 30000)
+  // const wallets = walletController.getAll()
+  setInterval(function () {
+    walletController.getAll().then(async(wallets) => {
+      for (let wallet of wallets) {
+        await coinController.create(wallet.walletId)
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    })
+  }, 15 * 60000)
 }
 const hoge = () => {
   // store price every 30s
