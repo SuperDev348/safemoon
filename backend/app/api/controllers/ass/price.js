@@ -46,4 +46,35 @@ module.exports = {
       res.status(400).json({ msg: "Not found" });
     })
   },
+  create: function() {
+    const id = 8757
+    axios.get('https://api.coingecko.com/api/v3/coins/australian-safe-shepherd?tickers=true'+ new URLSearchParams({
+      }),
+      )
+    .then((result) => {
+      // console.log(result.data.market_data)
+      let price={};
+      price.price = result.data.market_data.current_price.usd;
+      price.max = result.data.market_data.high_24h.usd
+      price.min = result.data.market_data.low_24h.usd
+      price.volume = result.data.market_data.total_volume.usd
+      price.ath = result.data.market_data.ath.usd
+      price.ath_percentage = result.data.market_data.ath_change_percentage.usd
+      price.ath_date = result.data.market_data.ath_date.usd
+      price.atl = result.data.market_data.atl.usd
+      price.atl_percentage = result.data.market_data.atl_change_percentage.usd
+      price.atl_date = result.data.market_data.atl_date.usd
+      priceModel.create(price, function (err, res) {
+        if (err) {
+          console.log(err)
+        }
+        else {
+          console.log('success price' + price.price + ' in the ass')
+        }
+      });
+    }).catch((err) => {
+      console.log('price api error in the ass')
+    });
+    
+  },
 }					
