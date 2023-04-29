@@ -10,6 +10,8 @@ module.exports = {
     priceModel.find({ 
       $and: [ { Timestamp: { $gte : startTime } }, { Timestamp: { $lte : current } }] 
     })
+    .sort({Timestamp: -1})
+    .exec()
     .then((result) => {
       if (result.length === 0)
         res.status(400).json({ msg: "Not found" });
