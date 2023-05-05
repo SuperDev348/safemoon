@@ -28,9 +28,6 @@ const getDataByWalletId = async (walletId) => {
     {start: 7*24*60, end: 24*60},
     {start: 52*7*24*60, end: 24*7*60},
   ]
-  const currentDate = new Date()
-  // current amount
-  let currentAmount = NO_DATA
   const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
     module: 'account',
     action: 'tokenbalance',
