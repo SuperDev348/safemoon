@@ -24,8 +24,5 @@ module.exports = {
           console.log(err)
         }
       }));
-      }).catch((err) => {
-        console.log('price api error in the ass')
-      });
   },
 }
