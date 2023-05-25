@@ -31,17 +31,6 @@ const getDataByWalletId = async (walletId) => {
   const currentDate = new Date()
   // current amount
   let currentAmount = NO_DATA
-  const res = await axios.get('https://api.etherscan.io/api?'+ new URLSearchParams({
-    module: 'account',
-    action: 'tokenbalance',
-    tag: 'latest',
-    apikey: 'T4TZAAF5U4CXJDU2YGQZMW8GYY6KG1Z1DS',
-    address: walletId,
-    contractaddress: '0xfad45e47083e4607302aa43c65fb3106f1cd7607'
-  }),
-  {headers: {
-    'User-Agent': 'HTTPBot-iOS/2021.1',
-  }})
   currentAmount = Math.floor(res.data.result/1000000000);
   console.log(currentAmount)
   // amounts
