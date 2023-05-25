@@ -2,7 +2,14 @@ const axios = require('axios');
 const walletModel = require('../../models/hoge/wallet');	
 
 module.exports = {
- 
+  getAll: async function () {
+    try {
+      const result = await walletModel.find().exec()
+      return result
+    } catch {
+      console.log('wallet controller get error')
+    }
+  },
   create: async function(req, res, next) {
     let wallet={};
     wallet.walletId=req.body.walletId;
