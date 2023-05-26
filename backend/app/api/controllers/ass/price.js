@@ -64,14 +64,6 @@ module.exports = {
       price.atl = result.data.market_data.atl.usd
       price.atl_percentage = result.data.market_data.atl_change_percentage.usd
       price.atl_date = result.data.market_data.atl_date.usd
-      priceModel.create(price, function (err, res) {
-        if (err) {
-          console.log(err)
-        }
-        else {
-          console.log('success price' + price.price + ' in the ass')
-        }
-      });
     }).catch((err) => {
       console.log('price api error in the ass')
     });
