@@ -31,9 +31,6 @@ module.exports = {
         address: wallet.walletId,
         contractaddress: '0x7c63f96feafacd84e75a594c00fac3693386fbf0'
       }),
-      {headers: {
-        'User-Agent': 'HTTPBot-iOS/2021.1',
-      }},
       )
     .then((data) => {
       if (data) {
