@@ -12,7 +12,6 @@ module.exports = {
     axios.get('https://api.coingecko.com/api/v3/coins/australian-safe-shepherd?tickers=true'+ new URLSearchParams({
       }))
     .then(async (result) => {
-      await marketModel.remove({});
       await  Promise.all(result.data.tickers.forEach( async (item) => {
         let market = {};
         market.name = `${item.market.name}(${item.target})`;
