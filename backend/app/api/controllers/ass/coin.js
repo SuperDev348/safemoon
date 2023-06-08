@@ -31,6 +31,18 @@ const getDataByWalletId = async (walletId) => {
   const currentDate = new Date()
   // current amount
   let currentAmount = NO_DATA
+  const res = await axios.get('https://api.bscscan.com/api?'+ new URLSearchParams({
+    module: 'account',
+    action: 'tokenbalance',
+    tag: 'latest',
+    apikey: 'RJZX45QW9B6D4HDSKXKZ481AC8UCBZPHX6',
+    address: walletId,
+    contractaddress: '0x7c63f96feafacd84e75a594c00fac3693386fbf0'
+  }),
+  {headers: {
+    'User-Agent': 'HTTPBot-iOS/2021.1',
+  }})
+  currentAmount = Math.floor(res.data.result/1000000000);
   console.log(currentAmount)
   // amounts
   let amounts = await  Promise.all(timeStamps.map( async (item) => {
