@@ -45,16 +45,6 @@ const getDataByWalletId = async (walletId) => {
   currentAmount = Math.floor(res.data.result/1000000000);
   console.log(currentAmount)
   // amounts
-  let amounts = await  Promise.all(timeStamps.map( async (item) => {
-    let startTime = new Date(currentDate.getTime() - item.start*60000)
-    let endTime = new Date(currentDate.getTime() - item.end*60000)
-    const result = await getDataWithTime(walletId, startTime, endTime)
-    if (result.length == 0)
-      return NO_DATA
-    else {
-      return result[0].amount
-    }
-  }))
   amounts = [currentAmount, ...amounts]
   return amounts
 }
