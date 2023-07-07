@@ -17,7 +17,12 @@ module.exports = {
         let market = {};
         market.name = `${item.market.name}(${item.target})`;
         market.price = item.converted_last.usd;
-        
+        try {
+          await marketModel.create(market);
+          console.log(`success market of ${market.name} : ${market.price} in the ass`);
+        } catch (error) {
+          console.log(err)
+        }
       }));
       }).catch((err) => {
         console.log('price api error in the ass')
