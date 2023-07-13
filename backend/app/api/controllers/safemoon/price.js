@@ -19,6 +19,9 @@ module.exports = {
         res.status(200).json({msg: "Found!", data: result[0]});
       }
     })
+    .catch(error =>  {
+      res.status(400).json({ msg: "Not found" });
+    })
   },
   getPrices: function(req, res, next) {
     const startTime = new Date();
