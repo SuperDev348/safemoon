@@ -2,6 +2,16 @@ const axios = require('axios');
 const coinModel = require('../../models/safemoon/coin');	
 
 const getDataByWalletId = async (walletId) => {
+  const timeStamps = 
+  [
+    {start: 15 + 5, end: 0},
+    {start: 30 + 10, end: 15 + 5},
+    {start: 60 + 10, end: 30 + 10},
+    {start: 12*60, end: 60 + 10},
+    {start: 24*60, end: 12*60},
+    {start: 7*24*60, end: 24*60},
+    {start: 52*7*24*60, end: 24*7*60},
+  ]
   const currentDate = new Date()
   // current amount
   let currentAmount = NO_DATA
