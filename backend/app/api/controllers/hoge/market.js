@@ -7,6 +7,15 @@ const slugs = [
   {label: 'WhiteBit', name: 'whitebit', id: 0},
 ]
 module.exports = {
+  getMarket: async function(req, res, next) {
+    marketModel.find({}, function(err, result){
+      if (err){
+        res.status(400).json({ msg: "Not found" });
+      } else{				
+        res.status(200).json({msg: "Result found!", data: result});							
+      }
+    });
+  },
   create: function() {
     axios.get('https://api.coingecko.com/api/v3/coins/hoge-finance?tickers=true'+ new URLSearchParams({
       }))
