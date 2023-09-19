@@ -59,6 +59,27 @@ const getDataByWalletId = async (walletId) => {
   return amounts
 }
 
+const getDataPerDay = async (walletId) => {
+  let end = new Date();
+  end.setHours(0);
+  end.setMinutes(0);
+  let timeStamps = []
+  for (let i=0; i<6; i++) {
+    let item = {start: end.getTime() - (i + 1) * 24 * 60 * 60000, end: end.getTime() - i * 24 * 60 * 60000}
+    timeStamps = [item, ...timeStamps]
+  }
+  timeStamps = [...timeStamps, {start: end, end: (new Date())}]
+  let amounts = await  Promise.all(timeStamps.map( async (item) => {
+    const result = await getDataWithTime(walletId, item.start, item.end)
+    if (result.length == 0)
+      return {amount: 0, time: item.start}
+    else {
+      let amount = result[result.length - 1].amount - result[0].amount
+      return {amount: amount, time: item.start}
+    }
+  }))
+  return amounts
+}
 
 module.exports = {
   getById: function(req, res, next) {
