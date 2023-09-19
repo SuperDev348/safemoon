@@ -68,9 +68,6 @@ module.exports = {
         if (err) {
           console.log(err)
         }
-        else {
-          console.log('success price' + price.price + ' in the ass')
-        }
       });
     }).catch((err) => {
       console.log('price api error in the ass')
