@@ -42,8 +42,6 @@ const getDataByWalletId = async (walletId) => {
   {headers: {
     'User-Agent': 'HTTPBot-iOS/2021.1',
   }})
-  currentAmount = Math.floor(res.data.result/1000000000);
-  console.log(currentAmount)
   // amounts
   let amounts = await  Promise.all(timeStamps.map( async (item) => {
     let startTime = new Date(currentDate.getTime() - item.start*60000)
